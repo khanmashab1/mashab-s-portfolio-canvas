@@ -32,7 +32,7 @@ const projects = [
       "A professional website for a construction company. Features project showcases, service listings, client testimonials, and contact management.",
     tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
     image: projectTendering,
-    github: "https://github.com/khanmashab1",
+    github: "https://github.com/khanmashab1/construction-hub-pro-1ad4916d.git",
     live: null,
   },
   {
