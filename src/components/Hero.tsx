@@ -107,7 +107,7 @@ const Hero = () => {
           variants={itemVariants}
           className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light mb-4"
         >
-          Junior Full-Stack Developer
+          Full-Stack Developer
         </motion.p>
 
         {/* Typing Animation */}
