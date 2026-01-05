@@ -5,9 +5,9 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com", label: "GitHub" },
-    { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-    { icon: Mail, href: "mailto:mashab@example.com", label: "Email" },
+    { icon: Github, href: "https://github.com/khanmashab1", label: "GitHub" },
+    { icon: Linkedin, href: "https://pk.linkedin.com/in/mashab-jadoon-895098369", label: "LinkedIn" },
+    { icon: Mail, href: "mailto:khanmashab1@gmail.com", label: "Email" },
   ];
 
   return (
@@ -34,6 +34,8 @@ const Footer = () => {
               <motion.a
                 key={label}
                 href={href}
+                target={label !== "Email" ? "_blank" : undefined}
+                rel={label !== "Email" ? "noopener noreferrer" : undefined}
                 aria-label={label}
                 className="p-2.5 rounded-lg bg-secondary/50 text-muted-foreground hover:text-primary hover:bg-secondary transition-all duration-300"
                 whileHover={{ y: -3 }}

@@ -24,25 +24,25 @@ const Contact = () => {
     {
       icon: Mail,
       label: "Email",
-      value: "mashab@example.com",
-      href: "mailto:mashab@example.com",
+      value: "khanmashab1@gmail.com",
+      href: "mailto:khanmashab1@gmail.com",
     },
     {
       icon: Github,
       label: "GitHub",
-      value: "github.com/mashab",
-      href: "https://github.com",
+      value: "github.com/khanmashab1",
+      href: "https://github.com/khanmashab1",
     },
     {
       icon: Linkedin,
       label: "LinkedIn",
-      value: "linkedin.com/in/mashab",
-      href: "https://linkedin.com",
+      value: "linkedin.com/in/mashab-jadoon",
+      href: "https://pk.linkedin.com/in/mashab-jadoon-895098369",
     },
     {
       icon: MapPin,
       label: "Location",
-      value: "Available Remote",
+      value: "Pakistan · Available Remote",
       href: null,
     },
   ];
@@ -92,6 +92,8 @@ const Contact = () => {
                     {item.href ? (
                       <a
                         href={item.href}
+                        target={item.label !== "Email" ? "_blank" : undefined}
+                        rel={item.label !== "Email" ? "noopener noreferrer" : undefined}
                         className="text-foreground hover:text-primary transition-colors font-medium"
                       >
                         {item.value}

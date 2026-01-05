@@ -1,8 +1,11 @@
 import { motion, type Easing } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
 import profileImage from "@/assets/profile.jpeg";
+import useTypingEffect from "@/hooks/useTypingEffect";
 
 const Hero = () => {
+  const typedSkill = useTypingEffect(80, 40, 2000);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -102,10 +105,21 @@ const Hero = () => {
         {/* Role */}
         <motion.p
           variants={itemVariants}
-          className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light mb-6"
+          className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light mb-4"
         >
           Junior Full-Stack Developer
         </motion.p>
+
+        {/* Typing Animation */}
+        <motion.div
+          variants={itemVariants}
+          className="h-8 md:h-10 mb-6 flex items-center justify-center"
+        >
+          <span className="text-lg md:text-xl text-primary font-medium">
+            {typedSkill}
+          </span>
+          <span className="w-0.5 h-6 md:h-7 bg-primary ml-1 animate-pulse" />
+        </motion.div>
 
         {/* Tagline */}
         <motion.p
@@ -161,13 +175,15 @@ const Hero = () => {
           className="flex items-center justify-center gap-6"
         >
           {[
-            { icon: Github, href: "https://github.com", label: "GitHub" },
-            { icon: Linkedin, href: "https://linkedin.com", label: "LinkedIn" },
-            { icon: Mail, href: "mailto:mashab@example.com", label: "Email" },
+            { icon: Github, href: "https://github.com/khanmashab1", label: "GitHub" },
+            { icon: Linkedin, href: "https://pk.linkedin.com/in/mashab-jadoon-895098369", label: "LinkedIn" },
+            { icon: Mail, href: "mailto:khanmashab1@gmail.com", label: "Email" },
           ].map(({ icon: Icon, href, label }) => (
             <motion.a
               key={label}
               href={href}
+              target={label !== "Email" ? "_blank" : undefined}
+              rel={label !== "Email" ? "noopener noreferrer" : undefined}
               aria-label={label}
               className="p-3 rounded-xl bg-secondary/50 text-muted-foreground hover:text-primary hover:bg-secondary transition-all duration-300"
               whileHover={{ y: -4, scale: 1.1 }}

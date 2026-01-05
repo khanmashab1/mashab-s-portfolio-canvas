@@ -6,34 +6,34 @@ const experiences = [
   {
     type: "work",
     title: "Junior Full-Stack Developer",
-    organization: "Tech Startup",
+    organization: "Freelance / Self-Employed",
     period: "2024 - Present",
     description:
-      "Building modern web applications with React, Node.js, and cloud services. Implementing secure authentication and database architectures.",
+      "Building modern web applications with React, Node.js, and Supabase. Specializing in secure authentication systems and scalable database architectures for clients worldwide.",
   },
   {
     type: "work",
-    title: "Frontend Developer Intern",
-    organization: "Software Agency",
+    title: "Web Developer",
+    organization: "Personal Projects & Open Source",
     period: "2023 - 2024",
     description:
-      "Developed responsive user interfaces and collaborated with design teams to implement pixel-perfect components.",
+      "Developed multiple full-stack applications including healthcare platforms, POS systems, and admin dashboards. Contributed to open-source projects and built a strong portfolio.",
   },
   {
     type: "education",
-    title: "Bachelor's in Computer Science",
-    organization: "University",
-    period: "2020 - 2024",
+    title: "Computer Science / Software Engineering",
+    organization: "University Studies",
+    period: "2020 - Present",
     description:
-      "Focused on software engineering, data structures, and web technologies. Graduated with distinction.",
+      "Pursuing degree with focus on software engineering, web technologies, and database systems. Active participant in coding competitions and tech communities.",
   },
   {
     type: "education",
-    title: "Full-Stack Development Certification",
-    organization: "Online Academy",
-    period: "2023",
+    title: "Full-Stack Development",
+    organization: "Self-Taught & Online Courses",
+    period: "2022 - Present",
     description:
-      "Intensive program covering React, Node.js, databases, and deployment strategies.",
+      "Completed comprehensive courses in React, Node.js, TypeScript, and cloud technologies. Continuously learning and staying updated with latest industry trends.",
   },
 ];
 
