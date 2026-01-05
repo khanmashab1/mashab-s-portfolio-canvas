@@ -39,7 +39,7 @@ const projects = [
     title: "LMS System",
     description:
       "A modern Learning Management System for educational institutions. Features course management, student progress tracking, quizzes, and interactive learning modules.",
-    tech: ["React", "TypeScript", "Supabase", "Tailwind CSS"],
+    tech: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
     image: projectLms,
     github: "https://github.com/khanmashab1",
     live: null,
