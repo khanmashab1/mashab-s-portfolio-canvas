@@ -1,49 +1,50 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
+import { ExternalLink } from "lucide-react";
 
 const skillCategories = [
   {
-    title: "Frontend",
+    title: "Frontend Development",
     color: "primary",
     skills: [
-      { name: "React", level: 90 },
-      { name: "TypeScript", level: 85 },
-      { name: "Next.js", level: 80 },
+      { name: "HTML5, CSS3, Responsive Design", level: 95 },
+      { name: "JavaScript (ES6+)", level: 90 },
+      { name: "React.js (Hooks, Component Architecture)", level: 85 },
       { name: "Tailwind CSS", level: 95 },
-      { name: "Framer Motion", level: 75 },
+      { name: "Framer Motion (UI Animations)", level: 80 },
     ],
   },
   {
-    title: "Backend",
+    title: "Backend Development",
     color: "accent",
     skills: [
-      { name: "Node.js", level: 85 },
-      { name: "Express", level: 80 },
-      { name: "PostgreSQL", level: 75 },
-      { name: "Supabase", level: 85 },
-      { name: "REST APIs", level: 90 },
+      { name: "PHP (Core PHP, Secure APIs)", level: 85 },
+      { name: "MySQL (Relational Database Design)", level: 85 },
+      { name: "Supabase (PostgreSQL, Auth, Storage)", level: 80 },
+      { name: "RESTful API Development", level: 90 },
+      { name: "Authentication & Authorization", level: 85 },
     ],
   },
   {
-    title: "Tools",
+    title: "Security & Authentication",
     color: "primary",
     skills: [
-      { name: "Git", level: 90 },
-      { name: "VS Code", level: 95 },
-      { name: "Docker", level: 70 },
-      { name: "Vercel", level: 85 },
-      { name: "Figma", level: 75 },
+      { name: "Role-Based Access Control", level: 85 },
+      { name: "Secure Login & Session Management", level: 90 },
+      { name: "CSRF & XSS Protection", level: 80 },
+      { name: "SQL Injection Prevention", level: 90 },
+      { name: "Web Application Security", level: 80 },
     ],
   },
   {
-    title: "Security",
+    title: "Tools & Workflow",
     color: "accent",
     skills: [
-      { name: "OAuth 2.0", level: 85 },
-      { name: "JWT", level: 90 },
-      { name: "OWASP", level: 75 },
-      { name: "HTTPS/TLS", level: 80 },
-      { name: "Input Validation", level: 85 },
+      { name: "Git & GitHub", level: 90 },
+      { name: "VS Code", level: 95 },
+      { name: "Vite & npm", level: 85 },
+      { name: "Composer (PHP)", level: 80 },
+      { name: "Postman (API Testing)", level: 85 },
     ],
   },
 ];
@@ -67,9 +68,20 @@ const Skills = () => {
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">
             Skills & Technologies
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto mb-6">
             A comprehensive toolkit for building modern, secure, and scalable applications
           </p>
+          <motion.a
+            href="https://www.fiverr.com/s/wkxDldA"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <ExternalLink size={18} />
+            Hire Me on Fiverr
+          </motion.a>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
