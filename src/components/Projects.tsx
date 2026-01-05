@@ -3,8 +3,8 @@ import { useRef } from "react";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import projectMedicare from "@/assets/project-medicare.png";
 import projectPos from "@/assets/project-pos.png";
-import projectAdmin from "@/assets/project-admin.png";
-import projectAuth from "@/assets/project-auth.png";
+import projectTendering from "@/assets/project-tendering.png";
+import projectLms from "@/assets/project-lms.png";
 
 const projects = [
   {
@@ -13,36 +13,36 @@ const projects = [
       "A comprehensive healthcare platform with doctor appointments, medical scheduling, and patient management. Built for modern healthcare providers.",
     tech: ["React", "Tailwind CSS", "TypeScript", "Vercel"],
     image: projectMedicare,
-    github: "https://github.com",
+    github: "https://github.com/khanmashab1",
     live: "https://medi-careplus-inky.vercel.app/",
     featured: true,
   },
   {
     title: "POS System",
     description:
-      "A comprehensive point-of-sale system with inventory management, sales tracking, and real-time analytics. Built for retail businesses to streamline operations.",
-    tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
+      "A comprehensive point-of-sale system with inventory management, sales tracking, multi-shop support, and real-time analytics. Features super admin panel, cashier management, and secure authentication.",
+    tech: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
     image: projectPos,
-    github: "https://github.com",
-    live: "https://example.com",
+    github: "https://github.com/khanmashab1/POS_System.git",
+    live: null,
   },
   {
-    title: "Secure Admin Panel",
+    title: "Tendering Website",
     description:
-      "Role-based admin dashboard with secure authentication, user management, and activity logging. Features include 2FA and audit trails.",
-    tech: ["Next.js", "TypeScript", "Supabase", "shadcn/ui"],
-    image: projectAdmin,
-    github: "https://github.com",
-    live: "https://example.com",
+      "A professional tendering and bidding platform for managing tenders, bids, and procurement processes. Features tender listings, bid management, and status tracking.",
+    tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
+    image: projectTendering,
+    github: "https://github.com/khanmashab1",
+    live: null,
   },
   {
-    title: "Supabase Auth App",
+    title: "LMS System",
     description:
-      "Modern authentication system with email, OAuth providers, and magic links. Demonstrates secure session management and protected routes.",
-    tech: ["React", "Supabase", "Tailwind CSS", "Zod"],
-    image: projectAuth,
-    github: "https://github.com",
-    live: "https://example.com",
+      "A modern Learning Management System for educational institutions. Features course management, student progress tracking, quizzes, and interactive learning modules.",
+    tech: ["React", "TypeScript", "Supabase", "Tailwind CSS"],
+    image: projectLms,
+    github: "https://github.com/khanmashab1",
+    live: null,
   },
 ];
 
@@ -98,21 +98,23 @@ const Projects = () => {
                     )}
                     
                     {/* Hover overlay */}
-                    <motion.div
-                      className="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                      whileHover={{ opacity: 1 }}
-                    >
-                      <motion.a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-4 rounded-full bg-primary text-primary-foreground"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
+                    {project.live && (
+                      <motion.div
+                        className="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        whileHover={{ opacity: 1 }}
                       >
-                        <ArrowUpRight size={24} />
-                      </motion.a>
-                    </motion.div>
+                        <motion.a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="p-4 rounded-full bg-primary text-primary-foreground"
+                          whileHover={{ scale: 1.1 }}
+                          whileTap={{ scale: 0.9 }}
+                        >
+                          <ArrowUpRight size={24} />
+                        </motion.a>
+                      </motion.div>
+                    )}
                   </div>
 
                   {/* Project Details */}
@@ -148,16 +150,18 @@ const Projects = () => {
                         <Github size={18} />
                         View Code
                       </motion.a>
-                      <motion.a
-                        href={project.live}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                        whileHover={{ x: 4 }}
-                      >
-                        <ExternalLink size={18} />
-                        Live Demo
-                      </motion.a>
+                      {project.live && (
+                        <motion.a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
+                          whileHover={{ x: 4 }}
+                        >
+                          <ExternalLink size={18} />
+                          Live Demo
+                        </motion.a>
+                      )}
                     </div>
                   </div>
                 </div>
