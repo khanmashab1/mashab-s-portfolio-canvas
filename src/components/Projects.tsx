@@ -4,16 +4,16 @@ import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import projectMedicare from "@/assets/project-medicare.png";
 import projectPos from "@/assets/project-pos.png";
 import projectTendering from "@/assets/project-tendering.png";
-import projectLms from "@/assets/project-lms.png";
+
 
 const projects = [
   {
     title: "MediCare+",
     description:
-      "A comprehensive healthcare platform with doctor appointments, medical scheduling, and patient management. Built for modern healthcare providers.",
-    tech: ["React", "Tailwind CSS", "TypeScript", "Vercel"],
+      "A comprehensive healthcare platform with doctor appointments, medical scheduling, patient management, and AI-powered symptom analysis. Features admin dashboard, user dashboard, and intelligent health insights.",
+    tech: ["React", "Tailwind CSS", "TypeScript", "AI", "Vercel"],
     image: projectMedicare,
-    github: "https://github.com/khanmashab1",
+    github: "https://github.com/khanmashab1/health-harmony-hub-0547dfb5.git",
     live: "https://medi-careplus-inky.vercel.app/",
     featured: true,
   },
@@ -33,15 +33,6 @@ const projects = [
     tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
     image: projectTendering,
     github: "https://github.com/khanmashab1/construction-hub-pro-1ad4916d.git",
-    live: null,
-  },
-  {
-    title: "LMS System",
-    description:
-      "A modern Learning Management System for educational institutions. Features course management, student progress tracking, quizzes, and interactive learning modules.",
-    tech: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
-    image: projectLms,
-    github: "https://github.com/khanmashab1",
     live: null,
   },
 ];
