@@ -5,11 +5,11 @@ import { Briefcase, GraduationCap } from "lucide-react";
 const experiences = [
   {
     type: "work",
-    title: "Junior Full-Stack Developer",
-    organization: "Freelance / Self-Employed",
+    title: "Full-Stack Developer",
+    organization: "Freelance / Fiverr",
     period: "2024 - Present",
     description:
-      "Building modern web applications with React, Node.js, and Supabase. Specializing in secure authentication systems and scalable database architectures for clients worldwide.",
+      "Building modern web applications with React, PHP, MySQL, and Supabase. Delivering secure authentication systems, role-based access control, and scalable database architectures for clients worldwide.",
   },
   {
     type: "work",
@@ -21,11 +21,11 @@ const experiences = [
   },
   {
     type: "education",
-    title: "Software Engineering",
+    title: "BS Computer Science",
     organization: "Pak-Austria Fachhochschule Institute of Applied Sciences and Technology",
     period: "2022 - Present",
     description:
-      "Pursuing degree with focus on software engineering, web technologies, and database systems. Active participant in coding competitions and tech communities.",
+      "Pursuing BS degree with focus on software engineering, web technologies, and database systems. Active participant in coding competitions and tech communities.",
   },
   {
     type: "education",
@@ -33,7 +33,7 @@ const experiences = [
     organization: "Self-Taught & Online Courses",
     period: "2022 - Present",
     description:
-      "Completed comprehensive courses in React, Node.js, TypeScript, and cloud technologies. Continuously learning and staying updated with latest industry trends.",
+      "Completed comprehensive courses in React, PHP, TypeScript, and cloud technologies. Continuously learning and staying updated with latest industry trends.",
   },
 ];
 
