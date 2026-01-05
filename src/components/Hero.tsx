@@ -1,5 +1,6 @@
 import { motion, type Easing } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
+import profileImage from "@/assets/profile.jpeg";
 
 const Hero = () => {
   const containerVariants = {
@@ -59,8 +60,30 @@ const Hero = () => {
         animate="visible"
         className="section-container relative z-10 text-center pt-20"
       >
-        {/* Status Badge */}
+        {/* Profile Image */}
         <motion.div variants={itemVariants} className="mb-8">
+          <motion.div
+            className="relative inline-block"
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border">
+              <img
+                src={profileImage}
+                alt="Mashab Jadoon"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <motion.div
+              className="absolute -inset-2 rounded-full border-2 border-primary/30"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
+          </motion.div>
+        </motion.div>
+
+        {/* Status Badge */}
+        <motion.div variants={itemVariants} className="mb-6">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border text-sm text-muted-foreground">
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
             Available for opportunities
@@ -96,7 +119,7 @@ const Hero = () => {
         {/* CTA Buttons */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
         >
           <motion.a
             href="#projects"
@@ -119,6 +142,16 @@ const Hero = () => {
             whileTap={{ scale: 0.98 }}
           >
             Contact Me
+          </motion.a>
+          <motion.a
+            href="/resume.pdf"
+            download
+            className="flex items-center gap-2 px-6 py-4 bg-secondary text-foreground font-medium rounded-xl border border-border hover:border-primary/50 transition-colors"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <Download size={18} />
+            Resume
           </motion.a>
         </motion.div>
 

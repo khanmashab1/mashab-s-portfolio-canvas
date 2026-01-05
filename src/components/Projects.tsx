@@ -1,14 +1,28 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import projectMedicare from "@/assets/project-medicare.png";
+import projectPos from "@/assets/project-pos.png";
+import projectAdmin from "@/assets/project-admin.png";
+import projectAuth from "@/assets/project-auth.png";
 
 const projects = [
+  {
+    title: "MediCare+",
+    description:
+      "A comprehensive healthcare platform with doctor appointments, medical scheduling, and patient management. Built for modern healthcare providers.",
+    tech: ["React", "Tailwind CSS", "TypeScript", "Vercel"],
+    image: projectMedicare,
+    github: "https://github.com",
+    live: "https://medi-careplus-inky.vercel.app/",
+    featured: true,
+  },
   {
     title: "POS System",
     description:
       "A comprehensive point-of-sale system with inventory management, sales tracking, and real-time analytics. Built for retail businesses to streamline operations.",
     tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
-    image: "pos",
+    image: projectPos,
     github: "https://github.com",
     live: "https://example.com",
   },
@@ -17,7 +31,7 @@ const projects = [
     description:
       "Role-based admin dashboard with secure authentication, user management, and activity logging. Features include 2FA and audit trails.",
     tech: ["Next.js", "TypeScript", "Supabase", "shadcn/ui"],
-    image: "admin",
+    image: projectAdmin,
     github: "https://github.com",
     live: "https://example.com",
   },
@@ -26,7 +40,7 @@ const projects = [
     description:
       "Modern authentication system with email, OAuth providers, and magic links. Demonstrates secure session management and protected routes.",
     tech: ["React", "Supabase", "Tailwind CSS", "Zod"],
-    image: "auth",
+    image: projectAuth,
     github: "https://github.com",
     live: "https://example.com",
   },
@@ -62,26 +76,27 @@ const Projects = () => {
               key={project.title}
               initial={{ opacity: 0, y: 60 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
               className="group"
             >
               <div className="glass-card-hover overflow-hidden">
                 <div className="grid lg:grid-cols-2 gap-0">
                   {/* Project Image/Preview */}
-                  <div className={`relative h-64 lg:h-auto ${index % 2 === 1 ? "lg:order-2" : ""}`}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-accent/20" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <motion.div
-                        className="w-32 h-32 rounded-2xl bg-secondary/80 backdrop-blur flex items-center justify-center border border-border"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ type: "spring", stiffness: 300 }}
-                      >
-                        <span className="font-display text-3xl font-bold glow-text">
-                          {project.title.split(" ")[0][0]}
-                          {project.title.split(" ")[1]?.[0] || ""}
-                        </span>
-                      </motion.div>
-                    </div>
+                  <div className={`relative h-64 lg:h-80 overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                    
+                    {/* Featured badge */}
+                    {project.featured && (
+                      <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">
+                        Featured
+                      </span>
+                    )}
+                    
                     {/* Hover overlay */}
                     <motion.div
                       className="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
@@ -89,6 +104,8 @@ const Projects = () => {
                     >
                       <motion.a
                         href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="p-4 rounded-full bg-primary text-primary-foreground"
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -123,6 +140,8 @@ const Projects = () => {
                     <div className="flex items-center gap-4">
                       <motion.a
                         href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                         whileHover={{ x: 4 }}
                       >
@@ -131,6 +150,8 @@ const Projects = () => {
                       </motion.a>
                       <motion.a
                         href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                         whileHover={{ x: 4 }}
                       >
