@@ -16,9 +16,9 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           {/* Logo & Copyright */}
           <div className="flex flex-col items-center md:items-start gap-2">
-            <span className="font-display text-xl font-bold glow-text">MJ</span>
+            <span className="font-display text-xl font-bold glow-text">MJ 🚀</span>
             <p className="text-sm text-muted-foreground flex items-center gap-1">
-              © {currentYear} Mashab Jadoon. Built with{" "}
+              © {currentYear} Mashab Jadoon. Built with ☕ &{" "}
               <motion.span
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 1, repeat: Infinity }}

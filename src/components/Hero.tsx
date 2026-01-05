@@ -89,7 +89,7 @@ const Hero = () => {
         <motion.div variants={itemVariants} className="mb-6">
           <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary/50 border border-border text-sm text-muted-foreground">
             <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-            Available for opportunities
+            ✨ Available for opportunities
           </span>
         </motion.div>
 
@@ -99,7 +99,7 @@ const Hero = () => {
           className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
         >
           <span className="text-foreground">Hi, I'm </span>
-          <span className="glow-text">Mashab Jadoon</span>
+          <span className="glow-text">Mashab Jadoon</span> 👋
         </motion.h1>
 
         {/* Role */}
@@ -107,7 +107,7 @@ const Hero = () => {
           variants={itemVariants}
           className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light mb-4"
         >
-          Full-Stack Developer
+          Full-Stack Developer 💻
         </motion.p>
 
         {/* Typing Animation */}
@@ -126,7 +126,7 @@ const Hero = () => {
           variants={itemVariants}
           className="max-w-2xl mx-auto text-base sm:text-lg text-muted-foreground/80 mb-10 leading-relaxed"
         >
-          Building secure, scalable web applications with clean code and modern technologies. 
+          Building secure, scalable web applications with clean code and modern technologies. 🔥
           Passionate about crafting exceptional digital experiences.
         </motion.p>
 
@@ -141,7 +141,7 @@ const Hero = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span className="relative z-10">View Projects</span>
+            <span className="relative z-10">View Projects 🎯</span>
             <motion.div
               className="absolute inset-0 bg-primary/80"
               initial={{ x: "-100%" }}
@@ -155,7 +155,7 @@ const Hero = () => {
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            Contact Me
+            Contact Me 📬
           </motion.a>
           <motion.a
             href="/resume.pdf"
