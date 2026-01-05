@@ -27,9 +27,9 @@ const projects = [
     live: null,
   },
   {
-    title: "Tendering Website",
+    title: "Construction Company Website",
     description:
-      "A professional tendering and bidding platform for managing tenders, bids, and procurement processes. Features tender listings, bid management, and status tracking.",
+      "A professional website for a construction company. Features project showcases, service listings, client testimonials, and contact management.",
     tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
     image: projectTendering,
     github: "https://github.com/khanmashab1",
