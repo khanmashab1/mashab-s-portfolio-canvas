@@ -21,9 +21,9 @@ const experiences = [
   },
   {
     type: "education",
-    title: "Computer Science / Software Engineering",
-    organization: "University Studies",
-    period: "2020 - Present",
+    title: "Software Engineering",
+    organization: "Pak-Austria Fachhochschule Institute of Applied Sciences and Technology",
+    period: "2022 - Present",
     description:
       "Pursuing degree with focus on software engineering, web technologies, and database systems. Active participant in coding competitions and tech communities.",
   },
