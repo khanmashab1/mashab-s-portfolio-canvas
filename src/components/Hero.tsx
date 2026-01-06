@@ -270,7 +270,15 @@ const Hero = () => {
           <span className="text-foreground">
             <CharacterReveal text="Hi, I'm " delay={0.5} />
           </span>
-          <span className="glow-text">
+          <span 
+            className="inline-block"
+            style={{
+              background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
             <CharacterReveal text="Mashab Jadoon" delay={0.8} />
           </span>
           <motion.span
