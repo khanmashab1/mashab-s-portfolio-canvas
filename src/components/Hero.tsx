@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, type Easing, AnimatePresence } from "framer-motion";
-import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
+import { Github, Linkedin, Mail, Download, ChevronDown } from "lucide-react";
 import profileImage from "@/assets/profile.jpeg";
 import avatarImage from "@/assets/avatar-professional.png";
 import useTypingEffect from "@/hooks/useTypingEffect";
+import CharacterReveal from "./CharacterReveal";
+import MagneticButton from "./MagneticButton";
 
 const Hero = () => {
   const typedSkill = useTypingEffect(80, 40, 2000);
@@ -72,7 +74,7 @@ const Hero = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="section-container relative z-10 text-center pt-20"
+        className="section-container relative z-10 text-center pt-20 pb-32"
       >
         {/* Profile Image with 3D Flip Animation */}
         <motion.div variants={itemVariants} className="mb-8 perspective-1000">
@@ -260,13 +262,24 @@ const Hero = () => {
           </span>
         </motion.div>
 
-        {/* Main Heading */}
+        {/* Main Heading with Character Animation */}
         <motion.h1
           variants={itemVariants}
           className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
         >
-          <span className="text-foreground">Hi, I'm </span>
-          <span className="glow-text">Mashab Jadoon</span> 👋
+          <span className="text-foreground">
+            <CharacterReveal text="Hi, I'm " delay={0.5} />
+          </span>
+          <span className="glow-text">
+            <CharacterReveal text="Mashab Jadoon" delay={0.8} />
+          </span>
+          <motion.span
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 1.8, type: "spring", stiffness: 400 }}
+          >
+            {" "}👋
+          </motion.span>
         </motion.h1>
 
         {/* Role */}
@@ -274,7 +287,14 @@ const Hero = () => {
           variants={itemVariants}
           className="text-xl sm:text-2xl md:text-3xl text-muted-foreground font-light mb-4"
         >
-          Full-Stack Developer 💻
+          <CharacterReveal text="Full-Stack Developer" delay={1.2} staggerDelay={0.04} />
+          <motion.span
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 2, type: "spring", stiffness: 400 }}
+          >
+            {" "}💻
+          </motion.span>
         </motion.p>
 
         {/* Typing Animation */}
@@ -297,49 +317,41 @@ const Hero = () => {
           Passionate about crafting exceptional digital experiences.
         </motion.p>
 
-        {/* CTA Buttons */}
+        {/* CTA Buttons with Magnetic Effect */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
-          <motion.a
-            href="#projects"
-            className="group relative px-8 py-4 bg-primary text-primary-foreground font-medium rounded-xl overflow-hidden"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span className="relative z-10">View Projects 🎯</span>
-            <motion.div
-              className="absolute inset-0 bg-primary/80"
-              initial={{ x: "-100%" }}
-              whileHover={{ x: 0 }}
-              transition={{ duration: 0.3 }}
-            />
-          </motion.a>
-          <motion.a
-            href="#contact"
-            className="px-8 py-4 glass-card font-medium rounded-xl border border-border hover:border-primary/50 transition-colors"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Contact Me 📬
-          </motion.a>
-          <motion.a
-            href="/resume.pdf"
-            download
-            className="flex items-center gap-2 px-6 py-4 bg-secondary text-foreground font-medium rounded-xl border border-border hover:border-primary/50 transition-colors"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Download size={18} />
-            Resume
-          </motion.a>
+          <MagneticButton href="#projects" strength={0.4}>
+            <div className="group relative px-8 py-4 bg-primary text-primary-foreground font-medium rounded-xl overflow-hidden">
+              <span className="relative z-10">View Projects 🎯</span>
+              <motion.div
+                className="absolute inset-0 bg-primary/80"
+                initial={{ x: "-100%" }}
+                whileHover={{ x: 0 }}
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+          </MagneticButton>
+          
+          <MagneticButton href="#contact" strength={0.4}>
+            <div className="px-8 py-4 glass-card font-medium rounded-xl border border-border hover:border-primary/50 transition-colors">
+              Contact Me 📬
+            </div>
+          </MagneticButton>
+          
+          <MagneticButton href="/resume.pdf" download strength={0.4}>
+            <div className="flex items-center gap-2 px-6 py-4 bg-secondary text-foreground font-medium rounded-xl border border-border hover:border-primary/50 transition-colors">
+              <Download size={18} />
+              Resume
+            </div>
+          </MagneticButton>
         </motion.div>
 
-        {/* Social Links */}
+        {/* Social Links - Separate Row */}
         <motion.div
           variants={itemVariants}
-          className="flex items-center justify-center gap-6"
+          className="flex items-center justify-center gap-6 mb-16"
         >
           {[
             { icon: Github, href: "https://github.com/khanmashab1", label: "GitHub" },
@@ -360,22 +372,24 @@ const Hero = () => {
             </motion.a>
           ))}
         </motion.div>
+      </motion.div>
 
-        {/* Scroll Indicator */}
-        <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
+      {/* Scroll Indicator - Fixed at Bottom, Centered */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 2, duration: 0.6 }}
+      >
+        <motion.a
+          href="#about"
+          className="flex flex-col items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-muted-foreground"
-          >
-            <ArrowDown size={24} />
-          </motion.div>
-        </motion.div>
+          <span className="text-xs uppercase tracking-widest">Scroll</span>
+          <ChevronDown size={20} />
+        </motion.a>
       </motion.div>
     </section>
   );

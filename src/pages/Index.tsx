@@ -8,23 +8,31 @@ import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
+import PageLoader from "@/components/PageLoader";
+import ScrollProgress from "@/components/ScrollProgress";
+import useLenis from "@/hooks/useLenis";
 
 const Index = () => {
+  useLenis();
+
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden scroll-smooth">
-      <Navigation />
-      <main>
-        <Hero />
-        <About />
-        <Skills />
-        <Services />
-        <Projects />
-        <Experience />
-        <Contact />
-      </main>
-      <Footer />
-      <BackToTop />
-    </div>
+    <PageLoader>
+      <div className="min-h-screen bg-background overflow-x-hidden">
+        <ScrollProgress />
+        <Navigation />
+        <main>
+          <Hero />
+          <About />
+          <Skills />
+          <Services />
+          <Projects />
+          <Experience />
+          <Contact />
+        </main>
+        <Footer />
+        <BackToTop />
+      </div>
+    </PageLoader>
   );
 };
 

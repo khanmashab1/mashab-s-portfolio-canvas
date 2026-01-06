@@ -4,7 +4,8 @@ import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import projectMedicare from "@/assets/project-medicare.png";
 import projectPos from "@/assets/project-pos.png";
 import projectTendering from "@/assets/project-tendering.png";
-
+import TiltCard from "./TiltCard";
+import CharacterReveal from "./CharacterReveal";
 
 const projects = [
   {
@@ -54,7 +55,7 @@ const Projects = () => {
             Portfolio
           </span>
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">
-            Featured Projects
+            <CharacterReveal text="Featured Projects" delay={0.2} />
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             A selection of projects showcasing my expertise in building secure, scalable applications
@@ -70,7 +71,7 @@ const Projects = () => {
               transition={{ duration: 0.6, delay: index * 0.15 }}
               className="group"
             >
-              <div className="glass-card-hover overflow-hidden">
+              <TiltCard className="glass-card-hover overflow-hidden" tiltStrength={8}>
                 <div className="grid lg:grid-cols-2 gap-0">
                   {/* Project Image/Preview */}
                   <div className={`relative h-64 lg:h-80 overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
@@ -156,7 +157,7 @@ const Projects = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </TiltCard>
             </motion.article>
           ))}
         </div>
