@@ -150,7 +150,7 @@ const Hero = () => {
             {/* Sparkle dots */}
             {[...Array(3)].map((_, i) => (
               <motion.div
-                key={i}
+                key={`sparkle-${i}`}
                 className="absolute w-2 h-2 bg-primary rounded-full"
                 style={{
                   top: `${20 + i * 30}%`,
@@ -168,6 +168,90 @@ const Hero = () => {
                 }}
               />
             ))}
+            
+            {/* Magic dust particles floating upward */}
+            {[...Array(12)].map((_, i) => {
+              const angle = (i / 12) * 360;
+              const radius = 80 + Math.random() * 20;
+              const startX = Math.cos((angle * Math.PI) / 180) * radius;
+              const startY = Math.sin((angle * Math.PI) / 180) * radius;
+              const size = 2 + Math.random() * 4;
+              
+              return (
+                <motion.div
+                  key={`particle-${i}`}
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    width: size,
+                    height: size,
+                    left: "50%",
+                    top: "50%",
+                    marginLeft: startX,
+                    marginTop: startY,
+                    background: i % 3 === 0 
+                      ? "hsl(var(--primary))" 
+                      : i % 3 === 1 
+                        ? "hsl(var(--accent))" 
+                        : "hsl(var(--primary) / 0.6)",
+                    boxShadow: `0 0 ${size * 2}px hsl(var(--primary) / 0.5)`,
+                  }}
+                  animate={{
+                    y: [-20, -80 - Math.random() * 40],
+                    x: [0, (Math.random() - 0.5) * 30],
+                    opacity: [0, 1, 1, 0],
+                    scale: [0, 1, 1, 0],
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                    ease: "easeOut",
+                  }}
+                />
+              );
+            })}
+            
+            {/* Floating sparkle stars */}
+            {[...Array(6)].map((_, i) => {
+              const angle = (i / 6) * 360 + 30;
+              const radius = 100 + Math.random() * 30;
+              const x = Math.cos((angle * Math.PI) / 180) * radius;
+              const y = Math.sin((angle * Math.PI) / 180) * radius;
+              
+              return (
+                <motion.div
+                  key={`star-${i}`}
+                  className="absolute pointer-events-none"
+                  style={{
+                    left: "50%",
+                    top: "50%",
+                    marginLeft: x,
+                    marginTop: y,
+                  }}
+                  animate={{
+                    scale: [0, 1, 0],
+                    rotate: [0, 180],
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    delay: i * 0.4 + 0.2,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <svg 
+                    width="8" 
+                    height="8" 
+                    viewBox="0 0 24 24" 
+                    fill="hsl(var(--primary))"
+                    className="drop-shadow-[0_0_4px_hsl(var(--primary))]"
+                  >
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                  </svg>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </motion.div>
 
