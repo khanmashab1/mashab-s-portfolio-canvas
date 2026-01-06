@@ -271,18 +271,28 @@ const Hero = () => {
           }}
         >
           <span className="text-white">Hi, I'm </span>
-          <span 
-            className="inline-block"
+          <motion.span 
+            className="inline-block relative"
             style={{
-              background: "linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 50%, hsl(var(--primary)) 100%)",
+              background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 25%, hsl(320, 100%, 75%) 50%, hsl(280, 100%, 70%) 75%, hsl(var(--primary)) 100%)",
+              backgroundSize: "200% 100%",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
               filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.5))"
             }}
+            animate={{
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+            }}
+            transition={{
+              duration: 4,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatType: "loop"
+            }}
           >
             Mashab Jadoon
-          </span>
+          </motion.span>
           <motion.span
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
