@@ -98,7 +98,7 @@ const Hero = () => {
             
             {/* Main image container */}
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border relative">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="popLayout" initial={false}>
                 <motion.img
                   key={showAvatar ? "avatar" : "photo"}
                   src={showAvatar ? avatarImage : profileImage}
@@ -107,24 +107,21 @@ const Hero = () => {
                   initial={{ 
                     opacity: 0, 
                     rotateY: -90,
-                    scale: 0.8,
-                    filter: "blur(10px)"
+                    scale: 0.9,
                   }}
                   animate={{ 
                     opacity: 1, 
                     rotateY: 0,
                     scale: 1,
-                    filter: "blur(0px)"
                   }}
                   exit={{ 
                     opacity: 0, 
                     rotateY: 90,
-                    scale: 0.8,
-                    filter: "blur(10px)"
+                    scale: 0.9,
                   }}
                   transition={{ 
-                    duration: 0.6, 
-                    ease: [0.68, -0.55, 0.265, 1.55] // Back easing for bounce
+                    duration: 0.3,
+                    ease: "easeOut"
                   }}
                 />
               </AnimatePresence>
