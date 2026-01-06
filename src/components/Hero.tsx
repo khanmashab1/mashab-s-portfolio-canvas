@@ -9,11 +9,11 @@ const Hero = () => {
   const typedSkill = useTypingEffect(80, 40, 2000);
   const [showAvatar, setShowAvatar] = useState(false);
 
-  // Auto-switch between photo and avatar every 4 seconds
+  // Auto-switch between photo and avatar every 2.5 seconds
   useEffect(() => {
     const interval = setInterval(() => {
       setShowAvatar((prev) => !prev);
-    }, 4000);
+    }, 2500);
     return () => clearInterval(interval);
   }, []);
 
