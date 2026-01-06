@@ -265,22 +265,9 @@ const Hero = () => {
         {/* Main Heading with Character Animation */}
         <motion.h1
           variants={itemVariants}
-          className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
+          className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-white"
         >
-          <span className="text-foreground">
-            <CharacterReveal text="Hi, I'm " delay={0.5} />
-          </span>
-          <span 
-            className="inline-block"
-            style={{
-              background: "linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            <CharacterReveal text="Mashab Jadoon" delay={0.8} />
-          </span>
+          <CharacterReveal text="Hi, I'm Mashab Jadoon" delay={0.5} />
           <motion.span
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
