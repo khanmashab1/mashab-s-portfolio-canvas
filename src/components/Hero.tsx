@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, type Easing, AnimatePresence } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
 import profileImage from "@/assets/profile.jpeg";
-import avatarImage from "@/assets/avatar-illustration.png";
+import avatarImage from "@/assets/avatar-professional.png";
 import useTypingEffect from "@/hooks/useTypingEffect";
 
 const Hero = () => {
