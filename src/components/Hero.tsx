@@ -1,10 +1,21 @@
-import { motion, type Easing } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, type Easing, AnimatePresence } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
+import profileImage from "@/assets/profile.jpeg";
 import avatarImage from "@/assets/avatar-illustration.png";
 import useTypingEffect from "@/hooks/useTypingEffect";
 
 const Hero = () => {
   const typedSkill = useTypingEffect(80, 40, 2000);
+  const [showAvatar, setShowAvatar] = useState(false);
+
+  // Auto-switch between photo and avatar every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShowAvatar((prev) => !prev);
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -66,16 +77,24 @@ const Hero = () => {
         {/* Profile Image */}
         <motion.div variants={itemVariants} className="mb-8">
           <motion.div
-            className="relative inline-block"
+            className="relative inline-block cursor-pointer"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 300 }}
+            onClick={() => setShowAvatar((prev) => !prev)}
           >
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border">
-              <img
-                src={avatarImage}
-                alt="Mashab Jadoon"
-                className="w-full h-full object-cover"
-              />
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border relative">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={showAvatar ? "avatar" : "photo"}
+                  src={showAvatar ? avatarImage : profileImage}
+                  alt="Mashab Jadoon"
+                  className="w-full h-full object-cover absolute inset-0"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.8 }}
+                  transition={{ duration: 0.5 }}
+                />
+              </AnimatePresence>
             </div>
             <motion.div
               className="absolute -inset-2 rounded-full border-2 border-primary/30"
