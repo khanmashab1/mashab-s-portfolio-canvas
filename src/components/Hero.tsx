@@ -1,6 +1,6 @@
 import { motion, type Easing } from "framer-motion";
 import { ArrowDown, Github, Linkedin, Mail, Download } from "lucide-react";
-import profileImage from "@/assets/profile.jpeg";
+import avatarImage from "@/assets/avatar-illustration.png";
 import useTypingEffect from "@/hooks/useTypingEffect";
 
 const Hero = () => {
@@ -72,7 +72,7 @@ const Hero = () => {
           >
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border">
               <img
-                src={profileImage}
+                src={avatarImage}
                 alt="Mashab Jadoon"
                 className="w-full h-full object-cover"
               />
