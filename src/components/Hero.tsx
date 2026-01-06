@@ -74,14 +74,29 @@ const Hero = () => {
         animate="visible"
         className="section-container relative z-10 text-center pt-20"
       >
-        {/* Profile Image */}
-        <motion.div variants={itemVariants} className="mb-8">
+        {/* Profile Image with 3D Flip Animation */}
+        <motion.div variants={itemVariants} className="mb-8 perspective-1000">
           <motion.div
             className="relative inline-block cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 300 }}
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
             onClick={() => setShowAvatar((prev) => !prev)}
+            style={{ transformStyle: "preserve-3d" }}
           >
+            {/* Glow effect behind image */}
+            <motion.div
+              className="absolute inset-0 w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto blur-xl"
+              animate={{
+                background: showAvatar 
+                  ? ["hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)"]
+                  : ["hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)"],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
+            
+            {/* Main image container */}
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border relative">
               <AnimatePresence mode="wait">
                 <motion.img
@@ -89,18 +104,70 @@ const Hero = () => {
                   src={showAvatar ? avatarImage : profileImage}
                   alt="Mashab Jadoon"
                   className="w-full h-full object-cover absolute inset-0"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.8 }}
-                  transition={{ duration: 0.5 }}
+                  initial={{ 
+                    opacity: 0, 
+                    rotateY: -90,
+                    scale: 0.8,
+                    filter: "blur(10px)"
+                  }}
+                  animate={{ 
+                    opacity: 1, 
+                    rotateY: 0,
+                    scale: 1,
+                    filter: "blur(0px)"
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    rotateY: 90,
+                    scale: 0.8,
+                    filter: "blur(10px)"
+                  }}
+                  transition={{ 
+                    duration: 0.6, 
+                    ease: [0.68, -0.55, 0.265, 1.55] // Back easing for bounce
+                  }}
                 />
               </AnimatePresence>
             </div>
+            
+            {/* Rotating ring */}
             <motion.div
               className="absolute -inset-2 rounded-full border-2 border-primary/30"
               animate={{ rotate: 360 }}
               transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             />
+            
+            {/* Pulsing outer ring */}
+            <motion.div
+              className="absolute -inset-4 rounded-full border border-primary/20"
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.5, 0.2, 0.5]
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+            
+            {/* Sparkle dots */}
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-primary rounded-full"
+                style={{
+                  top: `${20 + i * 30}%`,
+                  left: i % 2 === 0 ? "-10%" : "105%",
+                }}
+                animate={{
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
           </motion.div>
         </motion.div>
 
