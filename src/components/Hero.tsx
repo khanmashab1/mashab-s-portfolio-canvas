@@ -266,6 +266,9 @@ const Hero = () => {
         <motion.h1
           variants={itemVariants}
           className="font-display text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 text-white"
+          style={{
+            textShadow: "0 0 40px hsl(var(--primary) / 0.5), 0 0 80px hsl(var(--primary) / 0.3), 0 4px 20px rgba(0,0,0,0.3)"
+          }}
         >
           <CharacterReveal text="Hi, I'm Mashab Jadoon" delay={0.5} />
           <motion.span
