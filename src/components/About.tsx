@@ -56,9 +56,9 @@ const About = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
         >
           {[
-            { value: 10, suffix: "+", label: "Projects Completed" },
-            { value: 2, suffix: "+", label: "Years Experience" },
-            { value: 15, suffix: "+", label: "Technologies" },
+            { value: 3, suffix: "+", label: "Projects Completed" },
+            { value: 1, suffix: "+", label: "Year Experience" },
+            { value: 8, suffix: "+", label: "Technologies" },
             { value: 100, suffix: "%", label: "Client Satisfaction" },
           ].map((stat, index) => (
             <motion.div
