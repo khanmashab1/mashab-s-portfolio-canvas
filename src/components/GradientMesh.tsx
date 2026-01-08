@@ -5,7 +5,14 @@ const GradientMesh = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
   const prefersReducedMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
+  
+  // Default to true on initial render to prevent flash, then update
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768;
+    }
+    return true; // Default to mobile-safe rendering
+  });
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);

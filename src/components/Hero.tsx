@@ -10,7 +10,13 @@ import MagneticButton from "./MagneticButton";
 const Hero = () => {
   const typedSkill = useTypingEffect(80, 40, 2000);
   const prefersReducedMotion = useReducedMotion();
-  const [isMobile, setIsMobile] = useState(false);
+  // Default to true on initial render to prevent flash
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768;
+    }
+    return true;
+  });
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -177,7 +183,7 @@ const Hero = () => {
             textShadow: "0 4px 20px rgba(0,0,0,0.3)"
           }}
         >
-          <span className="text-white">Hi, I'm </span>
+          <span className="text-foreground">Hi, I'm </span>
           {shouldReduceAnimations ? (
             <span 
               className="inline-block relative animate-shimmer-mobile"
