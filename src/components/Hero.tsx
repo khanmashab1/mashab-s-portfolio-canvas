@@ -6,13 +6,15 @@ import avatarImage from "@/assets/avatar-professional.png";
 import useTypingEffect from "@/hooks/useTypingEffect";
 import CharacterReveal from "./CharacterReveal";
 import MagneticButton from "./MagneticButton";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Hero = () => {
   const typedSkill = useTypingEffect(80, 40, 2000);
   const [showAvatar, setShowAvatar] = useState(false);
   const profileRef = useRef<HTMLDivElement>(null);
+  const isMobile = useIsMobile();
 
-  // Mouse position for parallax
+  // Mouse position for parallax (desktop only)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -27,9 +29,9 @@ const Hero = () => {
   const shadowX = useTransform(x, [-200, 200], [15, -15]);
   const shadowY = useTransform(y, [-200, 200], [15, -15]);
 
-  // Handle mouse move for parallax effect
+  // Handle mouse move for parallax effect (desktop only)
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (!profileRef.current) return;
+    if (isMobile || !profileRef.current) return;
     const rect = profileRef.current.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -37,13 +39,14 @@ const Hero = () => {
     mouseY.set(e.clientY - centerY);
   };
 
-  // Auto-switch between photo and avatar every 2.5 seconds
+  // Auto-switch between photo and avatar (desktop only - disabled on mobile for performance)
   useEffect(() => {
+    if (isMobile) return;
     const interval = setInterval(() => {
       setShowAvatar((prev) => !prev);
     }, 2500);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMobile]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,34 +70,38 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Effects */}
+      {/* Background Effects - simplified on mobile */}
       <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-radial" />
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
-        animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{
-          duration: 8,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-      />
+      {!isMobile && (
+        <>
+          <motion.div
+            className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2,
+            }}
+          />
+        </>
+      )}
 
       <motion.div
         variants={containerVariants}
@@ -102,199 +109,97 @@ const Hero = () => {
         animate="visible"
         className="section-container relative z-10 text-center pt-20 pb-32"
       >
-        {/* Profile Image with Mouse Parallax */}
+        {/* Profile Image - Simplified on mobile, parallax on desktop */}
         <motion.div 
           ref={profileRef}
           variants={itemVariants} 
           className="mb-8 perspective-1000"
-          onMouseMove={handleMouseMove}
-          onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
+          onMouseMove={!isMobile ? handleMouseMove : undefined}
+          onMouseLeave={!isMobile ? () => { mouseX.set(0); mouseY.set(0); } : undefined}
         >
           <motion.div
             className="relative inline-block cursor-pointer"
-            whileHover={{ scale: 1.05 }}
+            whileHover={!isMobile ? { scale: 1.05 } : undefined}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             onClick={() => setShowAvatar((prev) => !prev)}
-            style={{ 
+            style={!isMobile ? { 
               transformStyle: "preserve-3d",
               x: moveX,
               y: moveY,
-            }}
+            } : undefined}
           >
-            {/* Glow effect behind image */}
-            <motion.div
-              className="absolute inset-0 w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto blur-xl"
-              animate={{
-                background: showAvatar 
-                  ? ["hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)"]
-                  : ["hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)"],
-                scale: [1, 1.2, 1],
-              }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            {/* Glow effect behind image - static on mobile */}
+            <div 
+              className="absolute inset-0 w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto blur-xl bg-primary/30"
             />
             
-            {/* Main image container with reactive shadow */}
-            <motion.div 
+            {/* Main image container */}
+            <div 
               className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border relative"
               style={{
-                boxShadow: useTransform(
-                  [shadowX, shadowY],
-                  ([sx, sy]) => `${sx}px ${sy}px 40px hsl(var(--primary) / 0.3), 0 10px 30px rgba(0,0,0,0.2)`
-                ),
+                boxShadow: "0 10px 40px hsl(var(--primary) / 0.3), 0 10px 30px rgba(0,0,0,0.2)"
               }}
             >
-              <AnimatePresence mode="popLayout" initial={false}>
-                <motion.img
-                  key={showAvatar ? "avatar" : "photo"}
-                  src={showAvatar ? avatarImage : profileImage}
+              {isMobile ? (
+                // Static image on mobile
+                <img
+                  src={profileImage}
                   alt="Mashab Jadoon"
-                  className="w-full h-full object-cover absolute inset-0"
-                  initial={{ 
-                    opacity: 0, 
-                    rotateY: -90,
-                    scale: 0.9,
-                  }}
-                  animate={{ 
-                    opacity: 1, 
-                    rotateY: 0,
-                    scale: 1,
-                  }}
-                  exit={{ 
-                    opacity: 0, 
-                    rotateY: 90,
-                    scale: 0.9,
-                  }}
-                  transition={{ 
-                    duration: 0.3,
-                    ease: "easeOut"
-                  }}
+                  className="w-full h-full object-cover"
                 />
-              </AnimatePresence>
-            </motion.div>
+              ) : (
+                // Animated flip on desktop
+                <AnimatePresence mode="popLayout" initial={false}>
+                  <motion.img
+                    key={showAvatar ? "avatar" : "photo"}
+                    src={showAvatar ? avatarImage : profileImage}
+                    alt="Mashab Jadoon"
+                    className="w-full h-full object-cover absolute inset-0"
+                    initial={{ opacity: 0, rotateY: -90, scale: 0.9 }}
+                    animate={{ opacity: 1, rotateY: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotateY: 90, scale: 0.9 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                  />
+                </AnimatePresence>
+              )}
+            </div>
             
-            {/* Rotating ring */}
-            <motion.div
-              className="absolute -inset-2 rounded-full border-2 border-primary/30"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            />
+            {/* Simple ring - no animation on mobile */}
+            <div className="absolute -inset-2 rounded-full border-2 border-primary/30" />
             
-            {/* Pulsing outer ring */}
-            <motion.div
-              className="absolute -inset-4 rounded-full border border-primary/20"
-              animate={{ 
-                scale: [1, 1.1, 1],
-                opacity: [0.5, 0.2, 0.5]
-              }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            />
-            
-            {/* Sparkle dots */}
-            {[...Array(3)].map((_, i) => (
-              <motion.div
-                key={`sparkle-${i}`}
-                className="absolute w-2 h-2 bg-primary rounded-full"
-                style={{
-                  top: `${20 + i * 30}%`,
-                  left: i % 2 === 0 ? "-10%" : "105%",
-                }}
-                animate={{
-                  scale: [0, 1, 0],
-                  opacity: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: i * 0.5,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
-            
-            {/* Magic dust particles floating upward */}
-            {[...Array(12)].map((_, i) => {
-              const angle = (i / 12) * 360;
-              const radius = 80 + Math.random() * 20;
-              const startX = Math.cos((angle * Math.PI) / 180) * radius;
-              const startY = Math.sin((angle * Math.PI) / 180) * radius;
-              const size = 2 + Math.random() * 4;
-              
-              return (
+            {/* Desktop-only decorative elements */}
+            {!isMobile && (
+              <>
+                {/* Rotating ring */}
                 <motion.div
-                  key={`particle-${i}`}
-                  className="absolute rounded-full pointer-events-none"
-                  style={{
-                    width: size,
-                    height: size,
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: startX,
-                    marginTop: startY,
-                    background: i % 3 === 0 
-                      ? "hsl(var(--primary))" 
-                      : i % 3 === 1 
-                        ? "hsl(var(--accent))" 
-                        : "hsl(var(--primary) / 0.6)",
-                    boxShadow: `0 0 ${size * 2}px hsl(var(--primary) / 0.5)`,
-                  }}
-                  animate={{
-                    y: [-20, -80 - Math.random() * 40],
-                    x: [0, (Math.random() - 0.5) * 30],
-                    opacity: [0, 1, 1, 0],
-                    scale: [0, 1, 1, 0],
-                  }}
-                  transition={{
-                    duration: 3 + Math.random() * 2,
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                    ease: "easeOut",
-                  }}
+                  className="absolute -inset-2 rounded-full border-2 border-primary/30"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 />
-              );
-            })}
-            
-            {/* Floating sparkle stars */}
-            {[...Array(6)].map((_, i) => {
-              const angle = (i / 6) * 360 + 30;
-              const radius = 100 + Math.random() * 30;
-              const x = Math.cos((angle * Math.PI) / 180) * radius;
-              const y = Math.sin((angle * Math.PI) / 180) * radius;
-              
-              return (
+                
+                {/* Pulsing outer ring */}
                 <motion.div
-                  key={`star-${i}`}
-                  className="absolute pointer-events-none"
-                  style={{
-                    left: "50%",
-                    top: "50%",
-                    marginLeft: x,
-                    marginTop: y,
-                  }}
-                  animate={{
-                    scale: [0, 1, 0],
-                    rotate: [0, 180],
-                    opacity: [0, 1, 0],
-                  }}
-                  transition={{
-                    duration: 2.5,
-                    repeat: Infinity,
-                    delay: i * 0.4 + 0.2,
-                    ease: "easeInOut",
-                  }}
-                >
-                  <svg 
-                    width="8" 
-                    height="8" 
-                    viewBox="0 0 24 24" 
-                    fill="hsl(var(--primary))"
-                    className="drop-shadow-[0_0_4px_hsl(var(--primary))]"
-                  >
-                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
-                  </svg>
-                </motion.div>
-              );
-            })}
+                  className="absolute -inset-4 rounded-full border border-primary/20"
+                  animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.2, 0.5] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                />
+                
+                {/* Sparkle dots - reduced to 3 */}
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={`sparkle-${i}`}
+                    className="absolute w-2 h-2 bg-primary rounded-full"
+                    style={{
+                      top: `${20 + i * 30}%`,
+                      left: i % 2 === 0 ? "-10%" : "105%",
+                    }}
+                    animate={{ scale: [0, 1, 0], opacity: [0, 1, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.5, ease: "easeInOut" }}
+                  />
+                ))}
+              </>
+            )}
           </motion.div>
         </motion.div>
 
