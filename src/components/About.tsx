@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import { Code2, Shield, Zap, Users } from "lucide-react";
+import AnimatedCounter from "./AnimatedCounter";
 
 const highlights = [
   {
@@ -45,6 +46,34 @@ const About = () => {
           <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">
             Crafting Digital Experiences
           </h2>
+        </motion.div>
+
+        {/* Stats with Animated Counters */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16"
+        >
+          {[
+            { value: 10, suffix: "+", label: "Projects Completed" },
+            { value: 2, suffix: "+", label: "Years Experience" },
+            { value: 15, suffix: "+", label: "Technologies" },
+            { value: 100, suffix: "%", label: "Client Satisfaction" },
+          ].map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
+              className="text-center p-4 glass-card rounded-xl"
+            >
+              <div className="font-display text-3xl md:text-4xl font-bold text-primary mb-1">
+                <AnimatedCounter end={stat.value} duration={2000} suffix={stat.suffix} />
+              </div>
+              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            </motion.div>
+          ))}
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
