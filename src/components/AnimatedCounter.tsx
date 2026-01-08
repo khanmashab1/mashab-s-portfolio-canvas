@@ -21,10 +21,10 @@ const AnimatedCounter = ({
   className = ""
 }: AnimatedCounterProps) => {
   const [count, setCount] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
   const ref = useRef<HTMLSpanElement>(null);
   const frameRef = useRef<number>();
   const startTimeRef = useRef<number>();
+  const hasStartedRef = useRef(false);
 
   const animate = useCallback((timestamp: number) => {
     if (!startTimeRef.current) {
@@ -50,13 +50,14 @@ const AnimatedCounter = ({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasStarted) {
-            setHasStarted(true);
+          if (entry.isIntersecting && !hasStartedRef.current) {
+            hasStartedRef.current = true;
+            startTimeRef.current = undefined;
             frameRef.current = requestAnimationFrame(animate);
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0.1, rootMargin: "50px" }
     );
 
     observer.observe(element);
@@ -67,7 +68,7 @@ const AnimatedCounter = ({
         cancelAnimationFrame(frameRef.current);
       }
     };
-  }, [animate, hasStarted]);
+  }, [animate]);
 
   return (
     <span ref={ref} className={className}>
