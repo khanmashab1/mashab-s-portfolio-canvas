@@ -102,8 +102,13 @@ const Hero = () => {
             onClick={() => setShowAvatar((prev) => !prev)}
             style={{ transformStyle: "preserve-3d" }}
           >
-            {/* Glow effect behind image - only on desktop */}
-            {!shouldReduceAnimations && (
+            {/* Glow effect behind image - CSS animation on mobile, JS on desktop */}
+            {shouldReduceAnimations ? (
+              <div 
+                className="absolute inset-0 w-32 h-32 rounded-full mx-auto blur-xl animate-gentle-pulse"
+                style={{ background: "hsl(var(--primary) / 0.3)" }}
+              />
+            ) : (
               <motion.div
                 className="absolute inset-0 w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto blur-xl"
                 animate={{
@@ -132,8 +137,13 @@ const Hero = () => {
               </AnimatePresence>
             </div>
             
-            {/* Decorative rings - only on desktop */}
-            {!shouldReduceAnimations && (
+            {/* Decorative rings - CSS animation on mobile, JS on desktop */}
+            {shouldReduceAnimations ? (
+              <>
+                <div className="absolute -inset-2 rounded-full border-2 border-primary/30 animate-slow-spin" />
+                <div className="absolute -inset-4 rounded-full border border-primary/20 animate-glow-ring" />
+              </>
+            ) : (
               <>
                 <motion.div
                   className="absolute -inset-2 rounded-full border-2 border-primary/30"
@@ -168,28 +178,44 @@ const Hero = () => {
           }}
         >
           <span className="text-white">Hi, I'm </span>
-          <motion.span 
-            className="inline-block relative"
-            style={{
-              background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 25%, hsl(320, 100%, 75%) 50%, hsl(280, 100%, 70%) 75%, hsl(var(--primary)) 100%)",
-              backgroundSize: "200% 100%",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.5))"
-            }}
-            animate={{
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-            }}
-            transition={{
-              duration: 4,
-              ease: "easeInOut",
-              repeat: Infinity,
-              repeatType: "loop"
-            }}
-          >
-            Mashab Jadoon
-          </motion.span>
+          {shouldReduceAnimations ? (
+            <span 
+              className="inline-block relative animate-shimmer-mobile"
+              style={{
+                background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 25%, hsl(320, 100%, 75%) 50%, hsl(280, 100%, 70%) 75%, hsl(var(--primary)) 100%)",
+                backgroundSize: "200% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.5))"
+              }}
+            >
+              Mashab Jadoon
+            </span>
+          ) : (
+            <motion.span 
+              className="inline-block relative"
+              style={{
+                background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 25%, hsl(320, 100%, 75%) 50%, hsl(280, 100%, 70%) 75%, hsl(var(--primary)) 100%)",
+                backgroundSize: "200% 100%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.5))"
+              }}
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+              }}
+              transition={{
+                duration: 4,
+                ease: "easeInOut",
+                repeat: Infinity,
+                repeatType: "loop"
+              }}
+            >
+              Mashab Jadoon
+            </motion.span>
+          )}
           <motion.span
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}

@@ -194,4 +194,51 @@
   .perspective-1000 {
     perspective: 1000px;
   }
+
+  /* CSS-only animations for mobile performance */
+  .animate-subtle-float {
+    animation: subtle-float 8s ease-in-out infinite;
+  }
+
+  @keyframes subtle-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .animate-gentle-pulse {
+    animation: gentle-pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes gentle-pulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(1.02); }
+  }
+
+  .animate-slow-spin {
+    animation: slow-spin 30s linear infinite;
+  }
+
+  @keyframes slow-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .animate-shimmer-mobile {
+    animation: shimmer-mobile 6s ease-in-out infinite;
+    background-size: 200% 100%;
+  }
+
+  @keyframes shimmer-mobile {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .animate-glow-ring {
+    animation: glow-ring 3s ease-in-out infinite;
+  }
+
+  @keyframes glow-ring {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.05); }
+  }
 }

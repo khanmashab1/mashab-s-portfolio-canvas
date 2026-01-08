@@ -20,25 +20,26 @@ const GradientMesh = () => {
   const hue1 = useTransform(scrollYProgress, [0, 0.5, 1], [174, 220, 262]);
   const hue2 = useTransform(scrollYProgress, [0, 0.5, 1], [262, 174, 320]);
 
-  // Static fallback for mobile
+  // CSS-only animations for mobile - lightweight but still visually engaging
   if (shouldReduceAnimations) {
     return (
       <div ref={ref} className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-background" />
         <div 
-          className="absolute w-[600px] h-[600px] rounded-full blur-[120px] opacity-20"
+          className="absolute w-[500px] h-[500px] rounded-full blur-[120px] opacity-25 animate-gentle-pulse"
           style={{
             top: "-10%",
             left: "-10%",
-            background: "radial-gradient(circle, hsl(var(--primary) / 0.3), transparent 70%)",
+            background: "radial-gradient(circle, hsl(var(--primary) / 0.4), transparent 70%)",
           }}
         />
         <div 
-          className="absolute w-[400px] h-[400px] rounded-full blur-[100px] opacity-15"
+          className="absolute w-[350px] h-[350px] rounded-full blur-[100px] opacity-20 animate-gentle-pulse"
           style={{
             bottom: "10%",
             right: "-5%",
-            background: "radial-gradient(circle, hsl(var(--accent) / 0.3), transparent 70%)",
+            background: "radial-gradient(circle, hsl(var(--accent) / 0.4), transparent 70%)",
+            animationDelay: "2s",
           }}
         />
       </div>
