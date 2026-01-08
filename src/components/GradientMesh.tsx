@@ -1,66 +1,24 @@
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const GradientMesh = () => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
-  const prefersReducedMotion = useReducedMotion();
-  
-  // Default to true on initial render to prevent flash, then update
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 768;
-    }
-    return true; // Default to mobile-safe rendering
-  });
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const shouldReduceAnimations = prefersReducedMotion || isMobile;
 
   // Transform scroll position into hue shifts
   const hue1 = useTransform(scrollYProgress, [0, 0.5, 1], [174, 220, 262]);
   const hue2 = useTransform(scrollYProgress, [0, 0.5, 1], [262, 174, 320]);
-
-  // CSS-only animations for mobile - lightweight but still visually engaging
-  if (shouldReduceAnimations) {
-    return (
-      <div ref={ref} className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 bg-background" />
-        <div 
-          className="absolute w-[500px] h-[500px] rounded-full blur-[120px] opacity-25 animate-gentle-pulse"
-          style={{
-            top: "-10%",
-            left: "-10%",
-            background: "radial-gradient(circle, hsl(var(--primary) / 0.4), transparent 70%)",
-          }}
-        />
-        <div 
-          className="absolute w-[350px] h-[350px] rounded-full blur-[100px] opacity-20 animate-gentle-pulse"
-          style={{
-            bottom: "10%",
-            right: "-5%",
-            background: "radial-gradient(circle, hsl(var(--accent) / 0.4), transparent 70%)",
-            animationDelay: "2s",
-          }}
-        />
-      </div>
-    );
-  }
+  const hue3 = useTransform(scrollYProgress, [0, 0.5, 1], [200, 280, 174]);
 
   return (
     <div
       ref={ref}
       className="fixed inset-0 -z-10 overflow-hidden pointer-events-none"
     >
+      {/* Base gradient */}
       <div className="absolute inset-0 bg-background" />
 
-      {/* Simplified animated blobs for desktop */}
+      {/* Animated mesh blobs */}
       <motion.div
         className="absolute w-[800px] h-[800px] rounded-full blur-[120px] opacity-30"
         style={{
@@ -70,6 +28,16 @@ const GradientMesh = () => {
             hue1,
             (h) => `radial-gradient(circle, hsl(${h} 72% 50% / 0.4), transparent 70%)`
           ),
+        }}
+        animate={{
+          x: [0, 100, 50, 0],
+          y: [0, 50, 100, 0],
+          scale: [1, 1.1, 0.95, 1],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
         }}
       />
 
@@ -82,6 +50,63 @@ const GradientMesh = () => {
             hue2,
             (h) => `radial-gradient(circle, hsl(${h} 80% 55% / 0.4), transparent 70%)`
           ),
+        }}
+        animate={{
+          x: [0, -80, -40, 0],
+          y: [0, 80, -40, 0],
+          scale: [1, 0.9, 1.1, 1],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      />
+
+      <motion.div
+        className="absolute w-[500px] h-[500px] rounded-full blur-[80px] opacity-20"
+        style={{
+          bottom: "10%",
+          left: "20%",
+          background: useTransform(
+            hue3,
+            (h) => `radial-gradient(circle, hsl(${h} 70% 60% / 0.4), transparent 70%)`
+          ),
+        }}
+        animate={{
+          x: [0, 60, -30, 0],
+          y: [0, -60, 30, 0],
+          scale: [1, 1.15, 0.9, 1],
+        }}
+        transition={{
+          duration: 18,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 5,
+        }}
+      />
+
+      <motion.div
+        className="absolute w-[400px] h-[400px] rounded-full blur-[90px] opacity-15"
+        style={{
+          top: "60%",
+          right: "30%",
+          background: useTransform(
+            hue1,
+            (h) => `radial-gradient(circle, hsl(${h + 60} 75% 50% / 0.3), transparent 70%)`
+          ),
+        }}
+        animate={{
+          x: [0, -50, 70, 0],
+          y: [0, 40, -50, 0],
+          scale: [1, 1.2, 0.85, 1],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 8,
         }}
       />
 

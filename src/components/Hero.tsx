@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, type Easing, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, type Easing, AnimatePresence } from "framer-motion";
 import { Github, Linkedin, Mail, Download, ChevronDown } from "lucide-react";
 import profileImage from "@/assets/profile.jpeg";
 import avatarImage from "@/assets/avatar-professional.png";
@@ -9,33 +9,15 @@ import MagneticButton from "./MagneticButton";
 
 const Hero = () => {
   const typedSkill = useTypingEffect(80, 40, 2000);
-  const prefersReducedMotion = useReducedMotion();
-  // Default to true on initial render to prevent flash
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window !== 'undefined') {
-      return window.innerWidth < 768;
-    }
-    return true;
-  });
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const shouldReduceAnimations = prefersReducedMotion || isMobile;
   const [showAvatar, setShowAvatar] = useState(false);
 
-  // Auto-switch between photo and avatar - disabled on mobile for performance
+  // Auto-switch between photo and avatar every 2.5 seconds
   useEffect(() => {
-    if (shouldReduceAnimations) return;
     const interval = setInterval(() => {
       setShowAvatar((prev) => !prev);
     }, 2500);
     return () => clearInterval(interval);
-  }, [shouldReduceAnimations]);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -62,35 +44,31 @@ const Hero = () => {
       {/* Background Effects */}
       <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-radial" />
-      {!shouldReduceAnimations && (
-        <>
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          />
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
-            animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.3, 0.5, 0.3],
-            }}
-            transition={{
-              duration: 8,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-          />
-        </>
-      )}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
+        animate={{
+          scale: [1.2, 1, 1.2],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+          delay: 2,
+        }}
+      />
 
       <motion.div
         variants={containerVariants}
@@ -108,24 +86,17 @@ const Hero = () => {
             onClick={() => setShowAvatar((prev) => !prev)}
             style={{ transformStyle: "preserve-3d" }}
           >
-            {/* Glow effect behind image - CSS animation on mobile, JS on desktop */}
-            {shouldReduceAnimations ? (
-              <div 
-                className="absolute inset-0 w-32 h-32 rounded-full mx-auto blur-xl animate-gentle-pulse"
-                style={{ background: "hsl(var(--primary) / 0.3)" }}
-              />
-            ) : (
-              <motion.div
-                className="absolute inset-0 w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto blur-xl"
-                animate={{
-                  background: showAvatar 
-                    ? ["hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)"]
-                    : ["hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)"],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              />
-            )}
+            {/* Glow effect behind image */}
+            <motion.div
+              className="absolute inset-0 w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto blur-xl"
+              animate={{
+                background: showAvatar 
+                  ? ["hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)"]
+                  : ["hsl(var(--accent) / 0.4)", "hsl(var(--primary) / 0.4)", "hsl(var(--accent) / 0.4)"],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            />
             
             {/* Main image container */}
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border relative">
@@ -135,35 +106,151 @@ const Hero = () => {
                   src={showAvatar ? avatarImage : profileImage}
                   alt="Mashab Jadoon"
                   className="w-full h-full object-cover absolute inset-0"
-                  initial={shouldReduceAnimations ? { opacity: 0 } : { opacity: 0, rotateY: -90, scale: 0.9 }}
-                  animate={shouldReduceAnimations ? { opacity: 1 } : { opacity: 1, rotateY: 0, scale: 1 }}
-                  exit={shouldReduceAnimations ? { opacity: 0 } : { opacity: 0, rotateY: 90, scale: 0.9 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  initial={{ 
+                    opacity: 0, 
+                    rotateY: -90,
+                    scale: 0.9,
+                  }}
+                  animate={{ 
+                    opacity: 1, 
+                    rotateY: 0,
+                    scale: 1,
+                  }}
+                  exit={{ 
+                    opacity: 0, 
+                    rotateY: 90,
+                    scale: 0.9,
+                  }}
+                  transition={{ 
+                    duration: 0.3,
+                    ease: "easeOut"
+                  }}
                 />
               </AnimatePresence>
             </div>
             
-            {/* Decorative rings - CSS animation on mobile, JS on desktop */}
-            {shouldReduceAnimations ? (
-              <>
-                <div className="absolute -inset-2 rounded-full border-2 border-primary/30 animate-slow-spin" />
-                <div className="absolute -inset-4 rounded-full border border-primary/20 animate-glow-ring" />
-              </>
-            ) : (
-              <>
-                <motion.div
-                  className="absolute -inset-2 rounded-full border-2 border-primary/30"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                />
-                <motion.div
-                  className="absolute -inset-4 rounded-full border border-primary/20"
-                  animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.2, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                />
-              </>
-            )}
+            {/* Rotating ring */}
+            <motion.div
+              className="absolute -inset-2 rounded-full border-2 border-primary/30"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            />
             
+            {/* Pulsing outer ring */}
+            <motion.div
+              className="absolute -inset-4 rounded-full border border-primary/20"
+              animate={{ 
+                scale: [1, 1.1, 1],
+                opacity: [0.5, 0.2, 0.5]
+              }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            />
+            
+            {/* Sparkle dots */}
+            {[...Array(3)].map((_, i) => (
+              <motion.div
+                key={`sparkle-${i}`}
+                className="absolute w-2 h-2 bg-primary rounded-full"
+                style={{
+                  top: `${20 + i * 30}%`,
+                  left: i % 2 === 0 ? "-10%" : "105%",
+                }}
+                animate={{
+                  scale: [0, 1, 0],
+                  opacity: [0, 1, 0],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  delay: i * 0.5,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+            
+            {/* Magic dust particles floating upward */}
+            {[...Array(12)].map((_, i) => {
+              const angle = (i / 12) * 360;
+              const radius = 80 + Math.random() * 20;
+              const startX = Math.cos((angle * Math.PI) / 180) * radius;
+              const startY = Math.sin((angle * Math.PI) / 180) * radius;
+              const size = 2 + Math.random() * 4;
+              
+              return (
+                <motion.div
+                  key={`particle-${i}`}
+                  className="absolute rounded-full pointer-events-none"
+                  style={{
+                    width: size,
+                    height: size,
+                    left: "50%",
+                    top: "50%",
+                    marginLeft: startX,
+                    marginTop: startY,
+                    background: i % 3 === 0 
+                      ? "hsl(var(--primary))" 
+                      : i % 3 === 1 
+                        ? "hsl(var(--accent))" 
+                        : "hsl(var(--primary) / 0.6)",
+                    boxShadow: `0 0 ${size * 2}px hsl(var(--primary) / 0.5)`,
+                  }}
+                  animate={{
+                    y: [-20, -80 - Math.random() * 40],
+                    x: [0, (Math.random() - 0.5) * 30],
+                    opacity: [0, 1, 1, 0],
+                    scale: [0, 1, 1, 0],
+                  }}
+                  transition={{
+                    duration: 3 + Math.random() * 2,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                    ease: "easeOut",
+                  }}
+                />
+              );
+            })}
+            
+            {/* Floating sparkle stars */}
+            {[...Array(6)].map((_, i) => {
+              const angle = (i / 6) * 360 + 30;
+              const radius = 100 + Math.random() * 30;
+              const x = Math.cos((angle * Math.PI) / 180) * radius;
+              const y = Math.sin((angle * Math.PI) / 180) * radius;
+              
+              return (
+                <motion.div
+                  key={`star-${i}`}
+                  className="absolute pointer-events-none"
+                  style={{
+                    left: "50%",
+                    top: "50%",
+                    marginLeft: x,
+                    marginTop: y,
+                  }}
+                  animate={{
+                    scale: [0, 1, 0],
+                    rotate: [0, 180],
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 2.5,
+                    repeat: Infinity,
+                    delay: i * 0.4 + 0.2,
+                    ease: "easeInOut",
+                  }}
+                >
+                  <svg 
+                    width="8" 
+                    height="8" 
+                    viewBox="0 0 24 24" 
+                    fill="hsl(var(--primary))"
+                    className="drop-shadow-[0_0_4px_hsl(var(--primary))]"
+                  >
+                    <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                  </svg>
+                </motion.div>
+              );
+            })}
           </motion.div>
         </motion.div>
 
@@ -183,45 +270,29 @@ const Hero = () => {
             textShadow: "0 4px 20px rgba(0,0,0,0.3)"
           }}
         >
-          <span className="text-foreground">Hi, I'm </span>
-          {shouldReduceAnimations ? (
-            <span 
-              className="inline-block relative animate-shimmer-mobile"
-              style={{
-                background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 25%, hsl(320, 100%, 75%) 50%, hsl(280, 100%, 70%) 75%, hsl(var(--primary)) 100%)",
-                backgroundSize: "200% 100%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.5))"
-              }}
-            >
-              Mashab Jadoon
-            </span>
-          ) : (
-            <motion.span 
-              className="inline-block relative"
-              style={{
-                background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 25%, hsl(320, 100%, 75%) 50%, hsl(280, 100%, 70%) 75%, hsl(var(--primary)) 100%)",
-                backgroundSize: "200% 100%",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.5))"
-              }}
-              animate={{
-                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
-              }}
-              transition={{
-                duration: 4,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatType: "loop"
-              }}
-            >
-              Mashab Jadoon
-            </motion.span>
-          )}
+          <span className="text-white">Hi, I'm </span>
+          <motion.span 
+            className="inline-block relative"
+            style={{
+              background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(280, 100%, 70%) 25%, hsl(320, 100%, 75%) 50%, hsl(280, 100%, 70%) 75%, hsl(var(--primary)) 100%)",
+              backgroundSize: "200% 100%",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+              filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.5))"
+            }}
+            animate={{
+              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"]
+            }}
+            transition={{
+              duration: 4,
+              ease: "easeInOut",
+              repeat: Infinity,
+              repeatType: "loop"
+            }}
+          >
+            Mashab Jadoon
+          </motion.span>
           <motion.span
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
