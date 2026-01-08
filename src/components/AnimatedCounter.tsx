@@ -13,6 +13,12 @@ interface AnimatedCounterProps {
   className?: string;
 }
 
+// Check if user prefers reduced motion
+const prefersReducedMotion = () => {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+};
+
 const AnimatedCounter = ({ 
   end, 
   duration = 2000, 
@@ -25,14 +31,24 @@ const AnimatedCounter = ({
   const frameRef = useRef<number>();
   const startTimeRef = useRef<number>();
   const hasStartedRef = useRef(false);
+  
+  // Shorter duration on mobile for snappier feel
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const actualDuration = prefersReducedMotion() ? 0 : (isMobile ? Math.min(duration, 1200) : duration);
 
   const animate = useCallback((timestamp: number) => {
+    // Skip animation if reduced motion preferred
+    if (actualDuration === 0) {
+      setCount(end);
+      return;
+    }
+    
     if (!startTimeRef.current) {
       startTimeRef.current = timestamp;
     }
 
     const elapsed = timestamp - startTimeRef.current;
-    const progress = Math.min(elapsed / duration, 1);
+    const progress = Math.min(elapsed / actualDuration, 1);
     const easedProgress = easeOutQuart(progress);
     const currentValue = Math.round(end * easedProgress);
 
@@ -41,7 +57,7 @@ const AnimatedCounter = ({
     if (progress < 1) {
       frameRef.current = requestAnimationFrame(animate);
     }
-  }, [end, duration]);
+  }, [end, actualDuration]);
 
   useEffect(() => {
     const element = ref.current;
