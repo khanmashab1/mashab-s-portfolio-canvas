@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion, type Easing, AnimatePresence } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, type Easing, AnimatePresence, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Github, Linkedin, Mail, Download, ChevronDown } from "lucide-react";
 import profileImage from "@/assets/profile.jpeg";
 import avatarImage from "@/assets/avatar-professional.png";
@@ -10,6 +10,32 @@ import MagneticButton from "./MagneticButton";
 const Hero = () => {
   const typedSkill = useTypingEffect(80, 40, 2000);
   const [showAvatar, setShowAvatar] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
+
+  // Mouse position for parallax
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Smooth spring animation for mouse movement
+  const springConfig = { damping: 25, stiffness: 150 };
+  const x = useSpring(mouseX, springConfig);
+  const y = useSpring(mouseY, springConfig);
+
+  // Transform mouse position to subtle movement
+  const moveX = useTransform(x, [-200, 200], [-8, 8]);
+  const moveY = useTransform(y, [-200, 200], [-8, 8]);
+  const shadowX = useTransform(x, [-200, 200], [15, -15]);
+  const shadowY = useTransform(y, [-200, 200], [15, -15]);
+
+  // Handle mouse move for parallax effect
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!profileRef.current) return;
+    const rect = profileRef.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    mouseX.set(e.clientX - centerX);
+    mouseY.set(e.clientY - centerY);
+  };
 
   // Auto-switch between photo and avatar every 2.5 seconds
   useEffect(() => {
@@ -76,15 +102,25 @@ const Hero = () => {
         animate="visible"
         className="section-container relative z-10 text-center pt-20 pb-32"
       >
-        {/* Profile Image with 3D Flip Animation */}
-        <motion.div variants={itemVariants} className="mb-8 perspective-1000">
+        {/* Profile Image with Mouse Parallax */}
+        <motion.div 
+          ref={profileRef}
+          variants={itemVariants} 
+          className="mb-8 perspective-1000"
+          onMouseMove={handleMouseMove}
+          onMouseLeave={() => { mouseX.set(0); mouseY.set(0); }}
+        >
           <motion.div
             className="relative inline-block cursor-pointer"
-            whileHover={{ scale: 1.08 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
             onClick={() => setShowAvatar((prev) => !prev)}
-            style={{ transformStyle: "preserve-3d" }}
+            style={{ 
+              transformStyle: "preserve-3d",
+              x: moveX,
+              y: moveY,
+            }}
           >
             {/* Glow effect behind image */}
             <motion.div
@@ -98,8 +134,16 @@ const Hero = () => {
               transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />
             
-            {/* Main image container */}
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border relative">
+            {/* Main image container with reactive shadow */}
+            <motion.div 
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto glow-border relative"
+              style={{
+                boxShadow: useTransform(
+                  [shadowX, shadowY],
+                  ([sx, sy]) => `${sx}px ${sy}px 40px hsl(var(--primary) / 0.3), 0 10px 30px rgba(0,0,0,0.2)`
+                ),
+              }}
+            >
               <AnimatePresence mode="popLayout" initial={false}>
                 <motion.img
                   key={showAvatar ? "avatar" : "photo"}
@@ -127,7 +171,7 @@ const Hero = () => {
                   }}
                 />
               </AnimatePresence>
-            </div>
+            </motion.div>
             
             {/* Rotating ring */}
             <motion.div
