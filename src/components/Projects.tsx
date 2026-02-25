@@ -9,31 +9,34 @@ import CharacterReveal from "./CharacterReveal";
 
 const projects = [
   {
-    title: "MediCare+",
+    title: "MediCare Pro – Pharmacy Management System",
     description:
-      "A comprehensive healthcare platform with doctor appointments, medical scheduling, patient management, and AI-powered symptom analysis. Features admin dashboard, user dashboard, and intelligent health insights.",
-    tech: ["React", "Tailwind CSS", "TypeScript", "AI", "Vercel"],
+      "Enterprise-level inventory and billing system with dashboard analytics, POS, stock management, expiry alerts, and reports export. Built for real-world pharmacy operations.",
+    tech: ["React", "Node.js", "Express", "MySQL"],
+    features: ["Dashboard analytics", "Inventory tracking", "Billing system", "Expiry alerts", "Reports export"],
     image: projectMedicare,
     github: "https://github.com/khanmashab1/health-harmony-hub-0547dfb5.git",
     live: "https://medi-careplus-inky.vercel.app/",
     featured: true,
   },
   {
-    title: "POS System",
+    title: "Noor Duas – Islamic Duas Platform",
     description:
-      "A comprehensive point-of-sale system with inventory management, sales tracking, multi-shop support, and real-time analytics. Features super admin panel, cashier management, and secure authentication.",
-    tech: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
+      "Multi-language Islamic dua platform with search, categories, favorites, daily random dua, and tasbeeh counter. Supports Arabic and Urdu content.",
+    tech: ["React", "REST API", "Database"],
+    features: ["Arabic + Urdu support", "Daily random dua", "Favorites system", "Category filtering"],
     image: projectPos,
-    github: "https://github.com/khanmashab1/POS_System.git",
+    github: "https://github.com/khanmashab1",
     live: null,
   },
   {
-    title: "Construction Company Website",
+    title: "Database / Academic Project",
     description:
-      "A professional website for a construction company. Features project showcases, service listings, client testimonials, and contact management.",
-    tech: ["React", "Node.js", "PostgreSQL", "Tailwind CSS"],
+      "Relational database system with structured schema design, normalized tables, complex queries, and comprehensive reporting for academic purposes.",
+    tech: ["SQL", "Backend API"],
+    features: ["Structured schema", "Complex queries", "Reporting"],
     image: projectTendering,
-    github: "https://github.com/khanmashab1/construction-hub-pro-1ad4916d.git",
+    github: "https://github.com/khanmashab1",
     live: null,
   },
 ];
@@ -58,7 +61,7 @@ const Projects = () => {
             <CharacterReveal text="Featured Projects" delay={0.2} />
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            A selection of projects showcasing my expertise in building secure, scalable applications
+            Real-world projects showcasing full-stack development expertise
           </p>
         </motion.div>
 
@@ -73,36 +76,18 @@ const Projects = () => {
             >
               <TiltCard className="glass-card-hover overflow-hidden" tiltStrength={8}>
                 <div className="grid lg:grid-cols-2 gap-0">
-                  {/* Project Image/Preview */}
+                  {/* Project Image */}
                   <div className={`relative h-64 lg:h-80 overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
+                    <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
-                    
-                    {/* Featured badge */}
                     {project.featured && (
                       <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">
                         Featured
                       </span>
                     )}
-                    
-                    {/* Hover overlay */}
                     {project.live && (
-                      <motion.div
-                        className="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        whileHover={{ opacity: 1 }}
-                      >
-                        <motion.a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="p-4 rounded-full bg-primary text-primary-foreground"
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                        >
+                      <motion.div className="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <motion.a href={project.live} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-primary text-primary-foreground" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                           <ArrowUpRight size={24} />
                         </motion.a>
                       </motion.div>
@@ -114,17 +99,24 @@ const Projects = () => {
                     <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed mb-6">
+                    <p className="text-muted-foreground leading-relaxed mb-4">
                       {project.description}
                     </p>
+
+                    {/* Features */}
+                    <ul className="mb-6 space-y-1">
+                      {project.features.map((feature) => (
+                        <li key={feature} className="text-sm text-muted-foreground flex items-center gap-2">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full border border-border"
-                        >
+                        <span key={tech} className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full border border-border">
                           {tech}
                         </span>
                       ))}
@@ -132,24 +124,12 @@ const Projects = () => {
 
                     {/* Links */}
                     <div className="flex items-center gap-4">
-                      <motion.a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                        whileHover={{ x: 4 }}
-                      >
+                      <motion.a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors" whileHover={{ x: 4 }}>
                         <Github size={18} />
                         View Code
                       </motion.a>
                       {project.live && (
-                        <motion.a
-                          href={project.live}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
-                          whileHover={{ x: 4 }}
-                        >
+                        <motion.a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors" whileHover={{ x: 4 }}>
                           <ExternalLink size={18} />
                           Live Demo
                         </motion.a>
