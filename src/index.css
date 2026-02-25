@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    /* Light theme */
+    /* Light theme - Deep Blue + Electric Blue */
     --background: 210 20% 98%;
     --foreground: 222 47% 11%;
 
@@ -16,7 +16,7 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222 47% 11%;
 
-    --primary: 174 72% 40%;
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 210 20% 93%;
@@ -25,7 +25,7 @@
     --muted: 210 20% 93%;
     --muted-foreground: 215 16% 47%;
 
-    --accent: 262 80% 55%;
+    --accent: 222 47% 11%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
@@ -33,13 +33,13 @@
 
     --border: 214 32% 91%;
     --input: 214 32% 91%;
-    --ring: 174 72% 40%;
+    --ring: 217 91% 60%;
 
     --radius: 0.75rem;
 
     /* Custom tokens */
-    --glow-primary: 174 72% 40%;
-    --glow-accent: 262 80% 55%;
+    --glow-primary: 217 91% 60%;
+    --glow-accent: 217 91% 50%;
     --glass-bg: 210 20% 96%;
     --glass-border: 214 32% 85%;
   }
@@ -51,21 +51,21 @@
     --card-foreground: 210 40% 98%;
     --popover: 222 47% 8%;
     --popover-foreground: 210 40% 98%;
-    --primary: 174 72% 56%;
-    --primary-foreground: 222 47% 6%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 222 30% 14%;
     --secondary-foreground: 210 40% 98%;
     --muted: 222 30% 12%;
     --muted-foreground: 215 20% 55%;
-    --accent: 262 80% 65%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 217 91% 70%;
+    --accent-foreground: 222 47% 6%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
     --border: 222 30% 18%;
     --input: 222 30% 18%;
-    --ring: 174 72% 56%;
-    --glow-primary: 174 72% 56%;
-    --glow-accent: 262 80% 65%;
+    --ring: 217 91% 60%;
+    --glow-primary: 217 91% 60%;
+    --glow-accent: 217 91% 50%;
     --glass-bg: 222 47% 10%;
     --glass-border: 222 30% 22%;
   }

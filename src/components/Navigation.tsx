@@ -3,11 +3,11 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const navItems = [
+  { name: "Home", href: "#" },
   { name: "About", href: "#about" },
   { name: "Skills", href: "#skills" },
-  { name: "Services", href: "#services" },
   { name: "Projects", href: "#projects" },
-  { name: "Experience", href: "#experience" },
+  { name: "Education", href: "#education" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -16,7 +16,6 @@ const Navigation = () => {
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    // Check for saved theme preference or default to dark
     const savedTheme = localStorage.getItem("theme");
     if (savedTheme === "light") {
       setIsDark(false);
@@ -72,7 +71,6 @@ const Navigation = () => {
               </motion.a>
             ))}
 
-            {/* Theme Toggle */}
             <motion.button
               onClick={toggleTheme}
               className="p-2 rounded-lg bg-secondary/50 text-foreground hover:bg-secondary transition-colors"
@@ -82,23 +80,11 @@ const Navigation = () => {
             >
               <AnimatePresence mode="wait">
                 {isDark ? (
-                  <motion.div
-                    key="sun"
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
+                  <motion.div key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
                     <Sun size={18} />
                   </motion.div>
                 ) : (
-                  <motion.div
-                    key="moon"
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
+                  <motion.div key="moon" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
                     <Moon size={18} />
                   </motion.div>
                 )}
@@ -106,45 +92,22 @@ const Navigation = () => {
             </motion.button>
           </div>
 
-          {/* Mobile Menu Button & Theme Toggle */}
+          {/* Mobile */}
           <div className="flex items-center gap-2 md:hidden">
-            <motion.button
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-secondary/50 text-foreground"
-              whileTap={{ scale: 0.9 }}
-              aria-label="Toggle theme"
-            >
+            <motion.button onClick={toggleTheme} className="p-2 rounded-lg bg-secondary/50 text-foreground" whileTap={{ scale: 0.9 }} aria-label="Toggle theme">
               {isDark ? <Sun size={18} /> : <Moon size={18} />}
             </motion.button>
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              className="p-2 text-foreground"
-              onClick={() => setIsOpen(!isOpen)}
-            >
+            <motion.button whileTap={{ scale: 0.9 }} className="p-2 text-foreground" onClick={() => setIsOpen(!isOpen)}>
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </motion.button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         <AnimatePresence>
           {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden pb-6 overflow-hidden"
-            >
+            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="md:hidden pb-6 overflow-hidden">
               {navItems.map((item, index) => (
-                <motion.a
-                  key={item.name}
-                  href={item.href}
-                  className="block py-3 text-muted-foreground hover:text-foreground transition-colors"
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.05 * index }}
-                  onClick={() => setIsOpen(false)}
-                >
+                <motion.a key={item.name} href={item.href} className="block py-3 text-muted-foreground hover:text-foreground transition-colors" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.05 * index }} onClick={() => setIsOpen(false)}>
                   {item.name}
                 </motion.a>
               ))}

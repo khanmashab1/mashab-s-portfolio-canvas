@@ -1,29 +1,23 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Code2, Shield, Zap, Users } from "lucide-react";
+import { Code2, Layers, Target } from "lucide-react";
 import AnimatedCounter from "./AnimatedCounter";
 
 const highlights = [
   {
     icon: Code2,
     title: "Clean Code",
-    description: "Writing maintainable, scalable code",
+    description: "Writing maintainable, readable, and well-structured code",
   },
   {
-    icon: Shield,
-    title: "Security First",
-    description: "Building with security in mind",
+    icon: Layers,
+    title: "Scalable Architecture",
+    description: "Building systems designed to grow with your business",
   },
   {
-    icon: Zap,
-    title: "Performance",
-    description: "Optimized for speed and efficiency",
-  },
-  {
-    icon: Users,
-    title: "User Focused",
-    description: "Creating intuitive experiences",
+    icon: Target,
+    title: "Business-Focused Solutions",
+    description: "Software that solves real-world business problems",
   },
 ];
 
@@ -48,7 +42,7 @@ const About = () => {
           </h2>
         </motion.div>
 
-        {/* Stats with Animated Counters */}
+        {/* Stats */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -85,14 +79,15 @@ const About = () => {
             className="space-y-6"
           >
             <p className="text-lg text-muted-foreground leading-relaxed">
-              I'm a passionate Full-Stack Developer with a keen eye for building 
-              secure, scalable web applications. My journey in tech started with 
-              curiosity and has evolved into a commitment to excellence.
+              I'm a passionate Full Stack Developer with a strong drive to build 
+              real-world systems that make a meaningful impact. My focus lies in creating 
+              scalable backend architectures and business-oriented software solutions.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              I specialize in React, Node.js, and modern authentication systems. 
-              Every project is an opportunity to solve problems and create 
-              meaningful impact through technology.
+              From Pharmacy Management Systems to healthcare platforms, I specialize in 
+              turning complex business requirements into clean, efficient software. I thrive 
+              on problem-solving and continuously learning new technologies to deliver 
+              top-notch solutions.
             </p>
             <motion.div
               className="pt-4"
@@ -105,38 +100,37 @@ const About = () => {
                 className="inline-flex items-center gap-2 text-primary hover:underline underline-offset-4"
               >
                 Let's work together
-                <motion.span
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
-                >
+                <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
                   →
                 </motion.span>
               </a>
             </motion.div>
           </motion.div>
 
-          {/* Highlight Cards */}
-          <div className="grid grid-cols-2 gap-4">
+          {/* Highlight Cards - 3 cards */}
+          <div className="grid gap-4">
             {highlights.map((item, index) => (
               <motion.div
                 key={item.title}
                 initial={{ opacity: 0, y: 30 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                className="glass-card-hover p-6"
+                className="glass-card-hover p-6 flex items-start gap-4"
               >
                 <motion.div
-                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary mb-4"
+                  className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0"
                   whileHover={{ rotate: 5, scale: 1.1 }}
                 >
                   <item.icon size={24} />
                 </motion.div>
-                <h3 className="font-display font-semibold text-foreground mb-2">
-                  {item.title}
-                </h3>
-                <p className="text-sm text-muted-foreground">
-                  {item.description}
-                </p>
+                <div>
+                  <h3 className="font-display font-semibold text-foreground mb-1">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-muted-foreground">
+                    {item.description}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
