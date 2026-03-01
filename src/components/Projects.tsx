@@ -5,6 +5,9 @@ import projectMedicare from "@/assets/project-medicare.png";
 import projectNoorduas from "@/assets/project-noorduas.png";
 import projectNoorduas2 from "@/assets/project-noorduas2.png";
 import projectTendering from "@/assets/project-tendering.png";
+import projectEnergy1 from "@/assets/project-energy1.png";
+import projectEnergy2 from "@/assets/project-energy2.png";
+import projectEnergy3 from "@/assets/project-energy3.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const projects = [
@@ -60,16 +63,19 @@ const projects = [
     live: "https://syedwarisshahco.vercel.app/",
   },
   {
-    title: "Energy Stream – Real-Time Energy Workspace",
+    title: "Energy Stream – Smart Energy Monitoring System",
     description:
-      "A modern energy management workspace application for monitoring and managing energy streams. Currently in active development with real-time data capabilities.",
-    tech: ["React", "Tailwind CSS", "Supabase"],
+      "A real-time IoT-based energy monitoring dashboard powered by ESP32 smart meters. Tracks voltage, current, power & energy consumption with live updates every 5 seconds, historical analysis, and Google Sheets integration for data export.",
+    tech: ["React", "Tailwind CSS", "Supabase", "ESP32", "IoT", "Google Sheets API"],
     features: [
-      "Real-time energy data monitoring",
-      "User authentication & dashboard",
-      "Modern responsive UI design",
+      "Real-time voltage, current, power & energy tracking",
+      "ESP32 smart meter integration with 5s refresh",
+      "Historical analysis with trend visualization",
+      "Google Sheets data source & CSV export",
+      "Multi-device management & admin panel",
+      "Consumption summary with daily/weekly/monthly views",
     ],
-    images: ["/placeholder.svg"],
+    images: [projectEnergy1, projectEnergy2, projectEnergy3],
     github: "https://github.com/khanmashab1",
     live: "https://energy-stream.vercel.app/login",
   },
