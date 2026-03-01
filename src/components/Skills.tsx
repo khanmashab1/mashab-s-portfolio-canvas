@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Monitor, Server, Database, Wrench } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const skillCategories = [
   {
@@ -44,7 +45,8 @@ const skillCategories = [
 
 const Skills = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isMobile = useIsMobile();
+  const isInView = useInView(ref, { once: true, margin: isMobile ? "0px" : "-100px" });
 
   return (
     <section id="skills" className="py-24 md:py-32 relative bg-secondary/20" ref={ref}>
@@ -96,8 +98,8 @@ const Skills = () => {
                         initial={{ width: 0 }}
                         animate={isInView ? { width: `${skill.level}%` } : {}}
                         transition={{
-                          duration: 1,
-                          delay: 0.3 + categoryIndex * 0.1 + skillIndex * 0.1,
+                          duration: isMobile ? 0.5 : 1,
+                          delay: isMobile ? 0.1 : 0.3 + categoryIndex * 0.1 + skillIndex * 0.1,
                           ease: "easeOut",
                         }}
                       />

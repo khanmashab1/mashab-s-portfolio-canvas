@@ -2,6 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { Code2, Layers, Target } from "lucide-react";
 import AnimatedCounter from "./AnimatedCounter";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const highlights = [
   {
@@ -23,7 +24,8 @@ const highlights = [
 
 const About = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isMobile = useIsMobile();
+  const isInView = useInView(ref, { once: true, margin: isMobile ? "0px" : "-100px" });
 
   return (
     <section id="about" className="py-24 md:py-32 relative" ref={ref}>
@@ -99,10 +101,7 @@ const About = () => {
                 href="#contact"
                 className="inline-flex items-center gap-2 text-primary hover:underline underline-offset-4"
               >
-                Let's work together
-                <motion.span animate={{ x: [0, 4, 0] }} transition={{ duration: 1.5, repeat: Infinity }}>
-                  →
-                </motion.span>
+                Let's work together →
               </a>
             </motion.div>
           </motion.div>
@@ -117,9 +116,9 @@ const About = () => {
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                 className="glass-card-hover p-6 flex items-start gap-4"
               >
-                <motion.div
+              <motion.div
                   className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0"
-                  whileHover={{ rotate: 5, scale: 1.1 }}
+                  whileHover={!isMobile ? { rotate: 5, scale: 1.1 } : undefined}
                 >
                   <item.icon size={24} />
                 </motion.div>
