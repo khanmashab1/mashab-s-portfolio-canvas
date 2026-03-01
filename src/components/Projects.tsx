@@ -9,11 +9,17 @@ import CharacterReveal from "./CharacterReveal";
 
 const projects = [
   {
-    title: "MediCare Pro – Pharmacy Management System",
+    title: "MediCare Plus – Pharmacy Management System",
     description:
-      "Enterprise-level inventory and billing system with dashboard analytics, POS, stock management, expiry alerts, and reports export. Built for real-world pharmacy operations.",
-    tech: ["React", "Node.js", "Express", "MySQL"],
-    features: ["Dashboard analytics", "Inventory tracking", "Billing system", "Expiry alerts", "Reports export"],
+      "A complete enterprise-level pharmacy management system with real-time dashboard analytics, inventory tracking, point-of-sale billing, expiry alerts, supplier management, and exportable reports. Built to streamline day-to-day pharmacy operations.",
+    tech: ["React", "Tailwind CSS", "Node.js", "Express.js", "MySQL"],
+    features: [
+      "Real-time dashboard with sales & inventory analytics",
+      "POS billing system with receipt generation",
+      "Stock management with low-stock & expiry alerts",
+      "Supplier management & purchase orders",
+      "Sales & inventory reports with export functionality",
+    ],
     image: projectMedicare,
     github: "https://github.com/khanmashab1/health-harmony-hub-0547dfb5.git",
     live: "https://medi-careplus-inky.vercel.app/",
@@ -22,19 +28,31 @@ const projects = [
   {
     title: "Noor Duas – Islamic Duas Platform",
     description:
-      "Multi-language Islamic dua platform with search, categories, favorites, daily random dua, and tasbeeh counter. Supports Arabic and Urdu content.",
-    tech: ["React", "REST API", "Database"],
-    features: ["Arabic + Urdu support", "Daily random dua", "Favorites system", "Category filtering"],
+      "A beautiful multi-language Islamic dua platform featuring curated collections of daily supplications. Supports Arabic and Urdu with transliteration, category-based browsing, a favorites system, and a digital tasbeeh counter.",
+    tech: ["React", "Tailwind CSS", "REST API", "PostgreSQL"],
+    features: [
+      "Arabic + Urdu text with transliteration",
+      "Daily random dua feature",
+      "Favorites & bookmarking system",
+      "Category-based filtering & search",
+      "Digital tasbeeh counter",
+    ],
     image: projectPos,
     github: "https://github.com/khanmashab1",
     live: null,
   },
   {
-    title: "Database / Academic Project",
+    title: "Construction Hub Pro – Tendering & Project Management",
     description:
-      "Relational database system with structured schema design, normalized tables, complex queries, and comprehensive reporting for academic purposes.",
-    tech: ["SQL", "Backend API"],
-    features: ["Structured schema", "Complex queries", "Reporting"],
+      "A professional construction company website with admin panel for managing tenders, projects, team members, and company services. Features a public-facing site with 3D hero section and a secure admin dashboard.",
+    tech: ["React", "Tailwind CSS", "Supabase", "Edge Functions"],
+    features: [
+      "Public website with services & project showcase",
+      "Admin dashboard with role-based access",
+      "Tender & project management system",
+      "Admin user management with super admin controls",
+      "Responsive design with modern 3D animations",
+    ],
     image: projectTendering,
     github: "https://github.com/khanmashab1",
     live: null,
