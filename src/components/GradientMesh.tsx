@@ -9,6 +9,8 @@ const GradientMesh = () => {
 
   const hue1 = useTransform(scrollYProgress, [0, 0.5, 1], [174, 220, 262]);
   const hue2 = useTransform(scrollYProgress, [0, 0.5, 1], [262, 174, 320]);
+  const blob1Background = useTransform(hue1, (h) => `radial-gradient(circle, hsl(${h} 72% 50% / 0.4), transparent 70%)`);
+  const blob2Background = useTransform(hue2, (h) => `radial-gradient(circle, hsl(${h} 80% 55% / 0.4), transparent 70%)`);
 
   // On mobile, render a single static gradient — no animations
   if (isMobile) {
@@ -35,7 +37,7 @@ const GradientMesh = () => {
         style={{
           top: "-20%",
           left: "-10%",
-          background: useTransform(hue1, (h) => `radial-gradient(circle, hsl(${h} 72% 50% / 0.4), transparent 70%)`),
+          background: blob1Background,
         }}
         animate={{ x: [0, 100, 50, 0], y: [0, 50, 100, 0], scale: [1, 1.1, 0.95, 1] }}
         transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
@@ -46,7 +48,7 @@ const GradientMesh = () => {
         style={{
           top: "30%",
           right: "-5%",
-          background: useTransform(hue2, (h) => `radial-gradient(circle, hsl(${h} 80% 55% / 0.4), transparent 70%)`),
+          background: blob2Background,
         }}
         animate={{ x: [0, -80, -40, 0], y: [0, 80, -40, 0], scale: [1, 0.9, 1.1, 1] }}
         transition={{ duration: 25, repeat: Infinity, ease: "easeInOut", delay: 2 }}
