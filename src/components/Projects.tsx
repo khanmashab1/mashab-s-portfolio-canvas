@@ -2,7 +2,7 @@ import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
 import projectMedicare from "@/assets/project-medicare.png";
-import projectPos from "@/assets/project-pos.png";
+import projectNoorduas from "@/assets/project-noorduas.png";
 import projectTendering from "@/assets/project-tendering.png";
 import TiltCard from "./TiltCard";
 import CharacterReveal from "./CharacterReveal";
@@ -27,18 +27,19 @@ const projects = [
     featured: true,
   },
   {
-    title: "Noor Duas – Islamic Duas Platform",
+    title: "Noor Duas – Authentic Duas from Quran & Sunnah",
     description:
-      "A beautiful multi-language Islamic dua platform featuring curated collections of daily supplications. Supports Arabic and Urdu with transliteration, category-based browsing, a favorites system, and a digital tasbeeh counter.",
-    tech: ["React", "Tailwind CSS", "REST API", "PostgreSQL"],
+      "A comprehensive Islamic platform for daily duas, prayer times, Hadith, Tasbeeh counter, Namaz guides, and Islamic stories. Features GPS-based prayer times with Ramadan mode, Qibla direction, PWA support for offline access, and multi-language support.",
+    tech: ["React", "Tailwind CSS", "Supabase", "PWA", "GPS API"],
     features: [
-      "Arabic + Urdu text with transliteration",
-      "Daily random dua feature",
-      "Favorites & bookmarking system",
-      "Category-based filtering & search",
-      "Digital tasbeeh counter",
+      "GPS-based prayer times with Ramadan mode",
+      "Duas with Arabic, Urdu & transliteration",
+      "Digital Tasbeeh counter & Qibla compass",
+      "Hadith collections, Namaz guides & Islamic stories",
+      "PWA with offline access & installable app",
+      "Category filtering, search & favorites system",
     ],
-    image: projectPos,
+    image: projectNoorduas,
     github: "https://github.com/khanmashab1",
     live: null,
   },
