@@ -8,6 +8,7 @@ const GradientMesh = () => {
   const isMobile = useIsMobile();
 
   const hue1 = useTransform(scrollYProgress, [0, 0.5, 1], [174, 220, 262]);
+  const hue2 = useTransform(scrollYProgress, [0, 0.5, 1], [262, 174, 320]);
 
   // On mobile, render a single static gradient — no animations
   if (isMobile) {
@@ -24,8 +25,6 @@ const GradientMesh = () => {
       </div>
     );
   }
-
-  const hue2 = useTransform(scrollYProgress, [0, 0.5, 1], [262, 174, 320]);
 
   return (
     <div ref={ref} className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
