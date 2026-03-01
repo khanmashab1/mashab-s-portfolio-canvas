@@ -8,8 +8,8 @@ const education = [
     icon: GraduationCap,
     title: "BS Computer Science",
     organization: "Pak-Austria Fachhochschule Institute of Applied Sciences and Technology",
-    period: "2022 - Present",
-    description: "Pursuing BS degree with focus on software engineering, web technologies, database systems, and algorithms. Active participant in coding competitions and tech communities.",
+    period: "2022 - 2026 (Expected)",
+    description: "Pursuing BS degree with focus on software engineering, web technologies, database systems, and algorithms. Final Year Project: MediCare+ — A Smart Healthcare Appointment Management System with AI-Powered Symptom Analysis.",
   },
   {
     icon: BookOpen,
