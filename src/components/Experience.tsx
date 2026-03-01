@@ -1,6 +1,7 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import { GraduationCap, BookOpen, Award } from "lucide-react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const education = [
   {
@@ -31,7 +32,8 @@ const education = [
 
 const Experience = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isMobile = useIsMobile();
+  const isInView = useInView(ref, { once: true, margin: isMobile ? "0px" : "-100px" });
 
   return (
     <section id="education" className="py-24 md:py-32 relative bg-secondary/20" ref={ref}>
@@ -76,8 +78,8 @@ const Experience = () => {
                     className={`glass-card-hover p-6 md:p-8 ${
                       index % 2 === 0 ? "md:mr-8" : "md:ml-8"
                     }`}
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 300 }}
+                   whileHover={!isMobile ? { scale: 1.02 } : undefined}
+                    transition={!isMobile ? { type: "spring", stiffness: 300 } : undefined}
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-primary/10 text-primary">
