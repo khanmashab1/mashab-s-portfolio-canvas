@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CharacterRevealProps {
   text: string;
@@ -15,54 +16,44 @@ const CharacterReveal = ({
   delay = 0,
   staggerDelay = 0.03 
 }: CharacterRevealProps) => {
+  const isMobile = useIsMobile();
+
+  // On mobile, just fade in the whole text — no per-character animation
+  if (isMobile) {
+    return (
+      <motion.span
+        className={`inline-block ${className}`}
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once }}
+        transition={{ duration: 0.4, delay: delay * 0.5 }}
+      >
+        {text}
+      </motion.span>
+    );
+  }
+
   const characters = text.split("");
-
-  const container = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { 
-        staggerChildren: staggerDelay, 
-        delayChildren: delay 
-      },
-    },
-  };
-
-  const child = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      rotateX: 0,
-      transition: {
-        type: "spring" as const,
-        damping: 12,
-        stiffness: 200,
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 50,
-      rotateX: -90,
-    },
-  };
 
   return (
     <motion.span
       className={`inline-block ${className}`}
-      variants={container}
       initial="hidden"
       whileInView="visible"
       viewport={{ once, margin: "-50px" }}
-      style={{ perspective: "1000px" }}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { staggerChildren: staggerDelay, delayChildren: delay } },
+      }}
     >
       {characters.map((char, index) => (
         <motion.span
-          variants={child}
           key={index}
           className="inline-block"
-          style={{ 
-            transformOrigin: "bottom center",
-            whiteSpace: char === " " ? "pre" : "normal"
+          style={{ whiteSpace: char === " " ? "pre" : "normal" }}
+          variants={{
+            hidden: { opacity: 0, y: 20 },
+            visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: "easeOut" } },
           }}
         >
           {char === " " ? "\u00A0" : char}
