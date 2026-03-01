@@ -22,7 +22,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-grid opacity-30" />
       <div className="absolute inset-0 bg-gradient-radial" />
 
-      <div className="section-container relative z-10 text-center pt-20 pb-32">
+      <div className="section-container relative z-10 text-center pt-20 pb-16">
         {/* Profile Image */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -147,7 +147,7 @@ const Hero = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.4, delay: 0.8 }}
-          className="flex items-center justify-center gap-6 mb-16"
+          className="flex items-center justify-center gap-6 mb-8"
         >
           {[
             { icon: Github, href: "https://github.com/khanmashab1", label: "GitHub" },
