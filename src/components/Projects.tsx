@@ -9,16 +9,17 @@ import CharacterReveal from "./CharacterReveal";
 
 const projects = [
   {
-    title: "MediCare Plus – Pharmacy Management System",
+    title: "MediCare+ – Smart Healthcare Appointment System",
     description:
-      "A complete enterprise-level pharmacy management system with real-time dashboard analytics, inventory tracking, point-of-sale billing, expiry alerts, supplier management, and exportable reports. Built to streamline day-to-day pharmacy operations.",
-    tech: ["React", "Tailwind CSS", "Node.js", "Express.js", "MySQL"],
+      "A comprehensive web-based Smart Healthcare Appointment Management System with AI-Powered Symptom Analysis. Features role-based dashboards for Patients, Doctors, Physician Assistants, and Admins — enabling end-to-end clinical workflow from booking to prescription generation.",
+    tech: ["React", "Tailwind CSS", "Supabase", "Edge Functions", "Stripe", "AI/RAG"],
     features: [
-      "Real-time dashboard with sales & inventory analytics",
-      "POS billing system with receipt generation",
-      "Stock management with low-stock & expiry alerts",
-      "Supplier management & purchase orders",
-      "Sales & inventory reports with export functionality",
+      "Multi-role dashboards (Patient, Doctor, PA, Admin)",
+      "Token-based queue system with estimated wait times",
+      "AI-powered symptom checker with RAG architecture",
+      "Stripe-integrated subscription plans (Basic, Pro, Enterprise)",
+      "Prescription generation with QR verification",
+      "Real-time notifications & email system",
     ],
     image: projectMedicare,
     github: "https://github.com/khanmashab1/health-harmony-hub-0547dfb5.git",
