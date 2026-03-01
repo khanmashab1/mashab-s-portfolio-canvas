@@ -1,8 +1,9 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
-import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { useRef, useState } from "react";
+import { ExternalLink, Github, ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
 import projectMedicare from "@/assets/project-medicare.png";
 import projectNoorduas from "@/assets/project-noorduas.png";
+import projectNoorduas2 from "@/assets/project-noorduas2.png";
 import projectTendering from "@/assets/project-tendering.png";
 import TiltCard from "./TiltCard";
 import CharacterReveal from "./CharacterReveal";
@@ -21,7 +22,7 @@ const projects = [
       "Prescription generation with QR verification",
       "Real-time notifications & email system",
     ],
-    image: projectMedicare,
+    images: [projectMedicare],
     github: "https://github.com/khanmashab1/health-harmony-hub-0547dfb5.git",
     live: "https://medi-careplus-inky.vercel.app/",
     featured: true,
@@ -39,9 +40,9 @@ const projects = [
       "PWA with offline access & installable app",
       "Category filtering, search & favorites system",
     ],
-    image: projectNoorduas,
+    images: [projectNoorduas, projectNoorduas2],
     github: "https://github.com/khanmashab1",
-    live: null,
+    live: "https://noor-duas.vercel.app/",
   },
   {
     title: "Construction Hub Pro – Tendering & Project Management",
@@ -55,11 +56,34 @@ const projects = [
       "Admin user management with super admin controls",
       "Responsive design with modern 3D animations",
     ],
-    image: projectTendering,
+    images: [projectTendering],
     github: "https://github.com/khanmashab1",
     live: null,
   },
 ];
+
+const ImageCarousel = ({ images, title }: { images: string[]; title: string }) => {
+  const [current, setCurrent] = useState(0);
+  if (images.length === 1) {
+    return <img src={images[0]} alt={title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />;
+  }
+  return (
+    <div className="relative w-full h-full">
+      <img src={images[current]} alt={`${title} - ${current + 1}`} className="w-full h-full object-cover transition-all duration-500" />
+      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+        {images.map((_, i) => (
+          <button key={i} onClick={(e) => { e.stopPropagation(); setCurrent(i); }} className={`w-2 h-2 rounded-full transition-all ${i === current ? "bg-primary w-5" : "bg-foreground/40"}`} />
+        ))}
+      </div>
+      <button onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c - 1 + images.length) % images.length); }} className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-background/60 text-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10">
+        <ChevronLeft size={16} />
+      </button>
+      <button onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c + 1) % images.length); }} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-background/60 text-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10">
+        <ChevronRight size={16} />
+      </button>
+    </div>
+  );
+};
 
 const Projects = () => {
   const ref = useRef(null);
@@ -98,7 +122,7 @@ const Projects = () => {
                 <div className="grid lg:grid-cols-2 gap-0">
                   {/* Project Image */}
                   <div className={`relative h-64 lg:h-80 overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
-                    <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    <ImageCarousel images={project.images} title={project.title} />
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
                     {project.featured && (
                       <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">
