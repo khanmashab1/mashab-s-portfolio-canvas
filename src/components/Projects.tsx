@@ -5,8 +5,7 @@ import projectMedicare from "@/assets/project-medicare.png";
 import projectNoorduas from "@/assets/project-noorduas.png";
 import projectNoorduas2 from "@/assets/project-noorduas2.png";
 import projectTendering from "@/assets/project-tendering.png";
-import TiltCard from "./TiltCard";
-import CharacterReveal from "./CharacterReveal";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const projects = [
   {
@@ -65,11 +64,11 @@ const projects = [
 const ImageCarousel = ({ images, title }: { images: string[]; title: string }) => {
   const [current, setCurrent] = useState(0);
   if (images.length === 1) {
-    return <img src={images[0]} alt={title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />;
+    return <img src={images[0]} alt={title} className="w-full h-full object-cover" loading="lazy" />;
   }
   return (
     <div className="relative w-full h-full">
-      <img src={images[current]} alt={`${title} - ${current + 1}`} className="w-full h-full object-cover transition-all duration-500" />
+      <img src={images[current]} alt={`${title} - ${current + 1}`} className="w-full h-full object-cover transition-opacity duration-300" loading="lazy" />
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
         {images.map((_, i) => (
           <button key={i} onClick={(e) => { e.stopPropagation(); setCurrent(i); }} className={`w-2 h-2 rounded-full transition-all ${i === current ? "bg-primary w-5" : "bg-foreground/40"}`} />
@@ -87,68 +86,54 @@ const ImageCarousel = ({ images, title }: { images: string[]; title: string }) =
 
 const Projects = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isMobile = useIsMobile();
+  const isInView = useInView(ref, { once: true, margin: isMobile ? "0px" : "-100px" });
 
   return (
     <section id="projects" className="py-24 md:py-32 relative" ref={ref}>
       <div className="section-container">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium tracking-wider uppercase">
-            Portfolio
-          </span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">
-            <CharacterReveal text="Featured Projects" delay={0.2} />
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Real-world projects showcasing full-stack development expertise
-          </p>
+          <span className="text-primary text-sm font-medium tracking-wider uppercase">Portfolio</span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">Featured Projects</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">Real-world projects showcasing full-stack development expertise</p>
         </motion.div>
 
         <div className="grid gap-8 lg:gap-12">
           {projects.map((project, index) => (
             <motion.article
               key={project.title}
-              initial={{ opacity: 0, y: 60 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
+              transition={{ duration: 0.4, delay: isMobile ? 0.1 : index * 0.15 }}
               className="group"
             >
-              <TiltCard className="glass-card-hover overflow-hidden" tiltStrength={8}>
+              <div className="glass-card overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="grid lg:grid-cols-2 gap-0">
-                  {/* Project Image */}
                   <div className={`relative h-64 lg:h-80 overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
                     <ImageCarousel images={project.images} title={project.title} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none" />
                     {project.featured && (
-                      <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">
-                        Featured
-                      </span>
+                      <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">Featured</span>
                     )}
                     {project.live && (
-                      <motion.div className="absolute inset-0 bg-primary/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <motion.a href={project.live} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-primary text-primary-foreground" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                          <ArrowUpRight size={24} />
-                        </motion.a>
-                      </motion.div>
+                      <a href={project.live} target="_blank" rel="noopener noreferrer" className="absolute top-4 right-4 p-2 rounded-full bg-primary text-primary-foreground hover:scale-110 transition-transform">
+                        <ArrowUpRight size={18} />
+                      </a>
                     )}
                   </div>
 
-                  {/* Project Details */}
-                  <div className="p-8 lg:p-10 flex flex-col justify-center">
-                    <h3 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                  <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center">
+                    <h3 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-muted-foreground leading-relaxed mb-4">
-                      {project.description}
-                    </p>
+                    <p className="text-muted-foreground leading-relaxed mb-4 text-sm md:text-base">{project.description}</p>
 
-                    {/* Features */}
-                    <ul className="mb-6 space-y-1">
+                    <ul className="mb-5 space-y-1">
                       {project.features.map((feature) => (
                         <li key={feature} className="text-sm text-muted-foreground flex items-center gap-2">
                           <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />
@@ -157,31 +142,25 @@ const Projects = () => {
                       ))}
                     </ul>
 
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-6">
+                    <div className="flex flex-wrap gap-2 mb-5">
                       {project.tech.map((tech) => (
-                        <span key={tech} className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full border border-border">
-                          {tech}
-                        </span>
+                        <span key={tech} className="px-3 py-1 text-xs font-medium bg-secondary text-secondary-foreground rounded-full border border-border">{tech}</span>
                       ))}
                     </div>
 
-                    {/* Links */}
                     <div className="flex items-center gap-4">
-                      <motion.a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors" whileHover={{ x: 4 }}>
-                        <Github size={18} />
-                        View Code
-                      </motion.a>
+                      <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                        <Github size={18} /> View Code
+                      </a>
                       {project.live && (
-                        <motion.a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors" whileHover={{ x: 4 }}>
-                          <ExternalLink size={18} />
-                          Live Demo
-                        </motion.a>
+                        <a href={project.live} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors">
+                          <ExternalLink size={18} /> Live Demo
+                        </a>
                       )}
                     </div>
                   </div>
                 </div>
-              </TiltCard>
+              </div>
             </motion.article>
           ))}
         </div>
