@@ -59,6 +59,35 @@ const projects = [
     github: "https://github.com/khanmashab1",
     live: "https://syedwarisshahco.vercel.app/",
   },
+  {
+    title: "Energy Stream – Real-Time Energy Workspace",
+    description:
+      "A modern energy management workspace application for monitoring and managing energy streams. Currently in active development with real-time data capabilities.",
+    tech: ["React", "Tailwind CSS", "Supabase"],
+    features: [
+      "Real-time energy data monitoring",
+      "User authentication & dashboard",
+      "Modern responsive UI design",
+    ],
+    images: ["/placeholder.svg"],
+    github: "https://github.com/khanmashab1",
+    live: "https://energy-stream.vercel.app/login",
+  },
+  {
+    title: "ZicMart – Point of Sale System",
+    description:
+      "A full-featured POS (Point of Sale) system built for retail management. Handles inventory, billing, sales tracking, and reporting with a local server setup.",
+    tech: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
+    features: [
+      "Product & inventory management",
+      "Sales billing & receipt generation",
+      "Sales reporting & analytics",
+      "User role management",
+    ],
+    images: ["/placeholder.svg"],
+    github: "https://github.com/khanmashab1",
+    live: null,
+  },
 ];
 
 const ImageCarousel = ({ images, title }: { images: string[]; title: string }) => {
