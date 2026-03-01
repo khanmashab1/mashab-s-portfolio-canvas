@@ -57,7 +57,7 @@ const projects = [
     ],
     images: [projectTendering],
     github: "https://github.com/khanmashab1",
-    live: null,
+    live: "https://syedwarisshahco.vercel.app/",
   },
 ];
 
