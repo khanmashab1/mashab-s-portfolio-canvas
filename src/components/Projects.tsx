@@ -8,6 +8,9 @@ import projectTendering from "@/assets/project-tendering.png";
 import projectEnergy1 from "@/assets/project-energy1.png";
 import projectEnergy2 from "@/assets/project-energy2.png";
 import projectEnergy3 from "@/assets/project-energy3.png";
+import projectZicmart1 from "@/assets/project-zicmart1.png";
+import projectZicmart2 from "@/assets/project-zicmart2.png";
+import projectZicmart3 from "@/assets/project-zicmart3.png";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const projects = [
@@ -82,15 +85,17 @@ const projects = [
   {
     title: "ZicMart – Point of Sale System",
     description:
-      "A full-featured POS (Point of Sale) system built for retail management. Handles inventory, billing, sales tracking, and reporting with a local server setup.",
+      "A full-featured POS system for ZIC Petrol Pump, Murree Road, Abbottabad. Manages products, categories, barcode scanning, billing, sales & profit reports, returns, and multi-user roles with an admin dashboard.",
     tech: ["PHP", "MySQL", "Bootstrap", "JavaScript"],
     features: [
-      "Product & inventory management",
-      "Sales billing & receipt generation",
-      "Sales reporting & analytics",
-      "User role management",
+      "Barcode scanning & manual product search",
+      "Real-time billing with tax & change calculation",
+      "Sales & profit reporting with filters",
+      "Low stock alerts & inventory management",
+      "Multi-role access (Admin, Cashier)",
+      "Product returns & category management",
     ],
-    images: ["/placeholder.svg"],
+    images: [projectZicmart1, projectZicmart2, projectZicmart3],
     github: "https://github.com/khanmashab1",
     live: null,
   },
