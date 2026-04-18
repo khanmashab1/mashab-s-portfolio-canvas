@@ -30,10 +30,20 @@ const Hero = () => {
           transition={{ duration: 0.5 }}
           className="mb-8"
         >
-          <div
+          <motion.div
             className="relative inline-block cursor-pointer"
             onClick={() => setShowAvatar((prev) => !prev)}
+            animate={isMobile ? undefined : { y: [0, -10, 0] }}
+            transition={isMobile ? undefined : { duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            whileHover={isMobile ? undefined : { scale: 1.05, rotate: [0, -3, 3, 0], transition: { rotate: { duration: 0.5 }, scale: { duration: 0.3 } } }}
           >
+            {!isMobile && (
+              <motion.div
+                className="absolute inset-0 rounded-full bg-primary/30 blur-2xl"
+                animate={{ scale: [1, 1.2, 1], opacity: [0.4, 0.7, 0.4] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              />
+            )}
             <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-primary/50 mx-auto relative"
               style={{ boxShadow: "0 10px 40px hsl(var(--primary) / 0.3)" }}>
               {isMobile ? (
@@ -56,7 +66,7 @@ const Hero = () => {
             {!isMobile && (
               <div className="absolute -inset-2 rounded-full border-2 border-primary/20 animate-[spin_20s_linear_infinite]" />
             )}
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Status Badge */}
