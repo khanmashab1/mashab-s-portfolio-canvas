@@ -66,7 +66,7 @@ const Hero = () => {
             {!isMobile && (
               <div className="absolute -inset-2 rounded-full border-2 border-primary/20 animate-[spin_20s_linear_infinite]" />
             )}
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Status Badge */}
