@@ -1,12 +1,12 @@
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Monitor, Server, Database, Wrench, Sparkles } from "lucide-react";
+import { Monitor, Server, Database, Wrench, Sparkles, type LucideIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 
 type Skill = { id: string; category: string; name: string; level: number };
 
-const iconMap: Record<string, React.ComponentType<{ size?: number }>> = {
+const iconMap: Record<string, LucideIcon> = {
   Frontend: Monitor,
   Backend: Server,
   Database: Database,
