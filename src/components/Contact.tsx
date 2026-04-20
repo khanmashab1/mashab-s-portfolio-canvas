@@ -86,9 +86,12 @@ const Contact = () => {
                 <textarea id="message" rows={5} maxLength={1000} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors resize-none" placeholder="Your message..." />
                 {errors.message && <p className="text-destructive text-xs mt-1">{errors.message}</p>}
               </div>
-              <button type="submit" className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors active:scale-[0.98]">
-                <Send size={18} /> Send Message
+              <button type="submit" disabled={submitting} className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors active:scale-[0.98] disabled:opacity-60">
+                <Send size={18} /> {submitting ? "Sending…" : "Send Message"}
               </button>
+              {errors.form && (
+                <p className="text-center text-sm text-destructive font-medium">{errors.form}</p>
+              )}
               {submitted && (
                 <p className="text-center text-sm text-primary font-medium animate-fade-in">✅ Message sent successfully!</p>
               )}
