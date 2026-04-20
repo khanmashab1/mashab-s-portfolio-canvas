@@ -1,6 +1,14 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Mail, Github, Linkedin, MapPin, Download, Send } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name too long"),
+  email: z.string().trim().email("Invalid email").max(255),
+  message: z.string().trim().min(1, "Message is required").max(1000, "Message too long"),
+});
 
 const Contact = () => {
   const ref = useRef(null);
@@ -8,6 +16,7 @@ const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const contactInfo = [
     { icon: Mail, label: "Email", value: "khanmashab1@gmail.com", href: "mailto:khanmashab1@gmail.com" },
@@ -16,22 +25,25 @@ const Contact = () => {
     { icon: MapPin, label: "Location", value: "Pakistan · Available Remote", href: null },
   ];
 
-  const validate = () => {
-    const errs: Record<string, string> = {};
-    if (!formData.name.trim()) errs.name = "Name is required";
-    if (!formData.email.trim()) errs.email = "Email is required";
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) errs.email = "Invalid email";
-    if (!formData.message.trim()) errs.message = "Message is required";
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validate()) return;
-    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
-    window.open(`mailto:khanmashab1@gmail.com?subject=${subject}&body=${body}`);
+    const parsed = contactSchema.safeParse(formData);
+    if (!parsed.success) {
+      const fieldErrors: Record<string, string> = {};
+      parsed.error.errors.forEach((err) => {
+        if (err.path[0]) fieldErrors[err.path[0] as string] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+    setErrors({});
+    setSubmitting(true);
+    const { error } = await supabase.from("contact_messages").insert(parsed.data);
+    setSubmitting(false);
+    if (error) {
+      setErrors({ form: "Failed to send. Please try again." });
+      return;
+    }
     setSubmitted(true);
     setFormData({ name: "", email: "", message: "" });
     setTimeout(() => setSubmitted(false), 5000);
