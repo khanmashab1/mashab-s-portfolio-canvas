@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, Star, X, Save } from "lucide-react";
+import { Plus, Pencil, Trash2, Star, X, Save, Upload, ImageIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { resolveImage } from "@/lib/projectImages";
 
 type Project = {
   id: string;
@@ -133,7 +134,6 @@ const ProjectForm = ({
   const [data, setData] = useState(initial);
   const techStr = data.tech.join(", ");
   const featStr = data.features.join("\n");
-  const imgStr = data.images.join("\n");
 
   return (
     <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
@@ -155,9 +155,11 @@ const ProjectForm = ({
           <Field label="Features (one per line)">
             <textarea rows={5} value={featStr} onChange={(e) => setData({ ...data, features: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) })} className="input-base resize-none" />
           </Field>
-          <Field label="Image keys or URLs (one per line)">
-            <textarea rows={3} value={imgStr} onChange={(e) => setData({ ...data, images: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) })} className="input-base resize-none" placeholder="project-medicare or https://..." />
-            <p className="text-[11px] text-muted-foreground mt-1">Use keys like <code>project-medicare</code> for built-in images, or full URLs for new images.</p>
+          <Field label="Project images">
+            <ImagesEditor
+              images={data.images}
+              onChange={(images) => setData({ ...data, images })}
+            />
           </Field>
           <div className="grid grid-cols-2 gap-4">
             <Field label="GitHub URL">
@@ -194,5 +196,113 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
     {children}
   </div>
 );
+
+const ImagesEditor = ({ images, onChange }: { images: string[]; onChange: (i: string[]) => void }) => {
+  const [uploading, setUploading] = useState(false);
+  const [urlInput, setUrlInput] = useState("");
+
+  const handleUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    setUploading(true);
+    const uploaded: string[] = [];
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/")) {
+        toast.error(`${file.name} is not an image`);
+        continue;
+      }
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error(`${file.name} exceeds 5MB`);
+        continue;
+      }
+      const ext = file.name.split(".").pop() ?? "png";
+      const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+      const { error } = await supabase.storage.from("project-images").upload(path, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
+      if (error) {
+        toast.error(`Upload failed: ${error.message}`);
+        continue;
+      }
+      const { data: pub } = supabase.storage.from("project-images").getPublicUrl(path);
+      uploaded.push(pub.publicUrl);
+    }
+    if (uploaded.length) {
+      onChange([...images, ...uploaded]);
+      toast.success(`Uploaded ${uploaded.length} image${uploaded.length > 1 ? "s" : ""}`);
+    }
+    setUploading(false);
+  };
+
+  const addUrl = () => {
+    const v = urlInput.trim();
+    if (!v) return;
+    onChange([...images, v]);
+    setUrlInput("");
+  };
+
+  const remove = (idx: number) => onChange(images.filter((_, i) => i !== idx));
+
+  const move = (idx: number, dir: -1 | 1) => {
+    const next = [...images];
+    const target = idx + dir;
+    if (target < 0 || target >= next.length) return;
+    [next[idx], next[target]] = [next[target], next[idx]];
+    onChange(next);
+  };
+
+  return (
+    <div className="space-y-3">
+      {images.length > 0 && (
+        <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+          {images.map((img, i) => (
+            <div key={`${img}-${i}`} className="relative group aspect-square rounded-lg overflow-hidden border border-border bg-secondary">
+              <img src={resolveImage(img)} alt="" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-background/70 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-1">
+                <button type="button" onClick={() => move(i, -1)} disabled={i === 0} className="px-1.5 py-0.5 text-xs bg-secondary rounded disabled:opacity-30">←</button>
+                <button type="button" onClick={() => move(i, 1)} disabled={i === images.length - 1} className="px-1.5 py-0.5 text-xs bg-secondary rounded disabled:opacity-30">→</button>
+                <button type="button" onClick={() => remove(i)} className="p-1 bg-destructive text-destructive-foreground rounded">
+                  <Trash2 size={12} />
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      <label className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary hover:bg-secondary/50 transition-colors text-sm text-muted-foreground">
+        {uploading ? (
+          <>Uploading…</>
+        ) : (
+          <>
+            <Upload size={16} /> Click to upload images
+          </>
+        )}
+        <input
+          type="file"
+          accept="image/*"
+          multiple
+          className="hidden"
+          disabled={uploading}
+          onChange={(e) => { handleUpload(e.target.files); e.target.value = ""; }}
+        />
+      </label>
+
+      <div className="flex gap-2">
+        <input
+          value={urlInput}
+          onChange={(e) => setUrlInput(e.target.value)}
+          placeholder="…or paste image URL / key (e.g. project-medicare)"
+          className="input-base flex-1 text-xs"
+          onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); addUrl(); } }}
+        />
+        <button type="button" onClick={addUrl} className="px-3 py-2 text-xs bg-secondary text-foreground rounded-lg hover:bg-secondary/80 flex items-center gap-1">
+          <ImageIcon size={14} /> Add
+        </button>
+      </div>
+      <p className="text-[11px] text-muted-foreground">Upload from your device, or paste a URL/built-in key. Max 5MB per file.</p>
+    </div>
+  );
+};
 
 export default ProjectsAdmin;
