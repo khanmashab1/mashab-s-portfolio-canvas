@@ -61,12 +61,10 @@ const AdminLogin = () => {
               <Lock size={26} />
             </div>
             <h1 className="font-display text-2xl font-bold text-foreground">
-              {mode === "login" ? "Admin Login" : "Create Admin Account"}
+              Admin Login
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
-              {mode === "login"
-                ? "Sign in to manage your portfolio"
-                : "First account becomes the admin"}
+              Sign in to manage your portfolio
             </p>
           </div>
 
@@ -109,19 +107,9 @@ const AdminLogin = () => {
               disabled={submitting}
               className="w-full py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50"
             >
-              {submitting ? "Please wait…" : mode === "login" ? "Sign In" : "Create Account"}
+              {submitting ? "Please wait…" : "Sign In"}
             </button>
           </form>
-
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            {mode === "login" ? "Need to set up admin? " : "Already have an account? "}
-            <button
-              onClick={() => setMode(mode === "login" ? "signup" : "login")}
-              className="text-primary hover:underline font-medium"
-            >
-              {mode === "login" ? "Sign up" : "Sign in"}
-            </button>
-          </div>
         </div>
       </div>
     </div>
