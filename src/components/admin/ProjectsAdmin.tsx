@@ -134,7 +134,6 @@ const ProjectForm = ({
   const [data, setData] = useState(initial);
   const techStr = data.tech.join(", ");
   const featStr = data.features.join("\n");
-  const imgStr = data.images.join("\n");
 
   return (
     <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
