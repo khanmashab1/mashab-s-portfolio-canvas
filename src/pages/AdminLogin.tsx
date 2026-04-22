@@ -14,7 +14,6 @@ const credSchema = z.object({
 const AdminLogin = () => {
   const navigate = useNavigate();
   const { session, isAdmin, loading } = useAdminAuth();
-  const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -32,22 +31,12 @@ const AdminLogin = () => {
     }
     setSubmitting(true);
     try {
-      if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
-          email: parsed.data.email,
-          password: parsed.data.password,
-          options: { emailRedirectTo: `${window.location.origin}/admin` },
-        });
-        if (error) throw error;
-        toast.success("Account created! You're now signed in as admin.");
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({
-          email: parsed.data.email,
-          password: parsed.data.password,
-        });
-        if (error) throw error;
-        toast.success("Welcome back!");
-      }
+      const { error } = await supabase.auth.signInWithPassword({
+        email: parsed.data.email,
+        password: parsed.data.password,
+      });
+      if (error) throw error;
+      toast.success("Welcome back!");
     } catch (err) {
       const msg = err instanceof Error ? err.message : "Authentication failed";
       toast.error(msg);
@@ -72,12 +61,10 @@ const AdminLogin = () => {
               <Lock size={26} />
             </div>
             <h1 className="font-display text-2xl font-bold text-foreground">
-              {mode === "login" ? "Admin Login" : "Create Admin Account"}
+              Admin Login
             </h1>
             <p className="text-sm text-muted-foreground mt-2">
-              {mode === "login"
-                ? "Sign in to manage your portfolio"
-                : "First account becomes the admin"}
+              Sign in to manage your portfolio
             </p>
           </div>
 
@@ -120,19 +107,9 @@ const AdminLogin = () => {
               disabled={submitting}
               className="w-full py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50"
             >
-              {submitting ? "Please wait…" : mode === "login" ? "Sign In" : "Create Account"}
+              {submitting ? "Please wait…" : "Sign In"}
             </button>
           </form>
-
-          <div className="mt-6 text-center text-sm text-muted-foreground">
-            {mode === "login" ? "Need to set up admin? " : "Already have an account? "}
-            <button
-              onClick={() => setMode(mode === "login" ? "signup" : "login")}
-              className="text-primary hover:underline font-medium"
-            >
-              {mode === "login" ? "Sign up" : "Sign in"}
-            </button>
-          </div>
         </div>
       </div>
     </div>
