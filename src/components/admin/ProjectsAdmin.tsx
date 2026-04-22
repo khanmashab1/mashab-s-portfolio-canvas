@@ -156,9 +156,11 @@ const ProjectForm = ({
           <Field label="Features (one per line)">
             <textarea rows={5} value={featStr} onChange={(e) => setData({ ...data, features: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) })} className="input-base resize-none" />
           </Field>
-          <Field label="Image keys or URLs (one per line)">
-            <textarea rows={3} value={imgStr} onChange={(e) => setData({ ...data, images: e.target.value.split("\n").map(s => s.trim()).filter(Boolean) })} className="input-base resize-none" placeholder="project-medicare or https://..." />
-            <p className="text-[11px] text-muted-foreground mt-1">Use keys like <code>project-medicare</code> for built-in images, or full URLs for new images.</p>
+          <Field label="Project images">
+            <ImagesEditor
+              images={data.images}
+              onChange={(images) => setData({ ...data, images })}
+            />
           </Field>
           <div className="grid grid-cols-2 gap-4">
             <Field label="GitHub URL">
