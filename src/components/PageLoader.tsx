@@ -1,21 +1,18 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 const PageLoader = ({ children }: { children: React.ReactNode }) => {
-  const isMobile = useIsMobile();
-  // Skip loader entirely on mobile for fast FCP
-  const [isLoading, setIsLoading] = useState(!isMobile);
+  // Decide synchronously so the splash never flashes on mobile (skipped < 768px)
+  const [isLoading, setIsLoading] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(min-width: 768px)").matches;
+  });
 
   useEffect(() => {
-    if (isMobile) return;
+    if (!isLoading) return;
     const timer = setTimeout(() => setIsLoading(false), 1500);
     return () => clearTimeout(timer);
-  }, [isMobile]);
-
-  if (isMobile) {
-    return <>{children}</>;
-  }
+  }, [isLoading]);
 
   return (
     <>
@@ -28,15 +25,15 @@ const PageLoader = ({ children }: { children: React.ReactNode }) => {
             transition={{ duration: 0.4 }}
           >
             <div className="relative z-10 flex flex-col items-center">
-              <motion.h1
-                className="text-4xl md:text-6xl font-bold glow-text whitespace-nowrap"
+              <motion.div
+                className="font-display text-4xl md:text-6xl font-semibold tracking-tight text-foreground whitespace-nowrap"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
               >
                 Mashab Jadoon
-              </motion.h1>
-              <motion.div className="mt-8 h-1 bg-secondary rounded-full overflow-hidden w-48">
+              </motion.div>
+              <motion.div className="mt-8 h-0.5 bg-secondary rounded-full overflow-hidden w-40">
                 <motion.div
                   className="h-full bg-primary rounded-full"
                   initial={{ width: "0%" }}

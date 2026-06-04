@@ -4,6 +4,7 @@ import { ExternalLink, Github, ArrowUpRight, ChevronLeft, ChevronRight } from "l
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
 import { resolveImage } from "@/lib/projectImages";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Project = {
   id: string;
@@ -31,13 +32,13 @@ const ImageCarousel = ({ images, title }: { images: string[]; title: string }) =
       <img src={resolved[current]} alt={`${title} - ${current + 1}`} className="w-full h-full object-cover transition-opacity duration-300" loading="lazy" />
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
         {resolved.map((_, i) => (
-          <button key={i} onClick={(e) => { e.stopPropagation(); setCurrent(i); }} className={`w-2 h-2 rounded-full transition-all ${i === current ? "bg-primary w-5" : "bg-foreground/40"}`} />
+          <button key={i} type="button" aria-label={`Show image ${i + 1} of ${resolved.length}`} aria-current={i === current} onClick={(e) => { e.stopPropagation(); setCurrent(i); }} className={`h-2 rounded-full transition-all ${i === current ? "bg-primary w-5" : "bg-foreground/40 w-2"}`} />
         ))}
       </div>
-      <button onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c - 1 + resolved.length) % resolved.length); }} className="absolute left-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-background/60 text-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10">
+      <button type="button" aria-label="Previous image" onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c - 1 + resolved.length) % resolved.length); }} className="absolute left-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-background/70 text-foreground border border-border opacity-80 md:opacity-0 md:group-hover:opacity-100 focus-visible:opacity-100 transition-opacity z-10">
         <ChevronLeft size={16} />
       </button>
-      <button onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c + 1) % resolved.length); }} className="absolute right-2 top-1/2 -translate-y-1/2 p-1 rounded-full bg-background/60 text-foreground opacity-0 group-hover:opacity-100 transition-opacity z-10">
+      <button type="button" aria-label="Next image" onClick={(e) => { e.stopPropagation(); setCurrent((c) => (c + 1) % resolved.length); }} className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-background/70 text-foreground border border-border opacity-80 md:opacity-0 md:group-hover:opacity-100 focus-visible:opacity-100 transition-opacity z-10">
         <ChevronRight size={16} />
       </button>
     </div>
@@ -71,13 +72,32 @@ const Projects = () => {
           transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium tracking-wider uppercase">Portfolio</span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">Featured Projects</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">Real-world projects showcasing full-stack development expertise</p>
+          <span className="eyebrow">Selected Work</span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 mb-4">Featured Projects</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">Real-world projects showcasing full-stack development expertise.</p>
         </motion.div>
 
         {loading ? (
-          <p className="text-center text-muted-foreground">Loading projects…</p>
+          <div className="grid gap-8 lg:gap-12" aria-hidden="true">
+            {[0, 1].map((i) => (
+              <div key={i} className="glass-card overflow-hidden">
+                <div className="grid lg:grid-cols-2 gap-0">
+                  <Skeleton className="h-64 lg:h-80 rounded-none" />
+                  <div className="p-6 md:p-8 lg:p-10 space-y-3">
+                    <Skeleton className="h-7 w-1/2" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-5/6" />
+                    <Skeleton className="h-4 w-2/3" />
+                    <div className="flex gap-2 pt-3">
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-16" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="grid gap-8 lg:gap-12">
             {projects.map((project, index) => (
@@ -92,7 +112,6 @@ const Projects = () => {
                   <div className="grid lg:grid-cols-2 gap-0">
                     <div className={`relative h-64 lg:h-80 overflow-hidden ${index % 2 === 1 ? "lg:order-2" : ""}`}>
                       <ImageCarousel images={project.images} title={project.title} />
-                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent pointer-events-none" />
                       {project.featured && (
                         <span className="absolute top-4 left-4 px-3 py-1 text-xs font-medium bg-primary text-primary-foreground rounded-full">Featured</span>
                       )}
@@ -104,7 +123,7 @@ const Projects = () => {
                     </div>
 
                     <div className="p-6 md:p-8 lg:p-10 flex flex-col justify-center">
-                      <h3 className="font-display text-xl md:text-2xl lg:text-3xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                      <h3 className="font-display text-xl md:text-2xl lg:text-3xl font-semibold text-foreground mb-3 group-hover:text-primary transition-colors">
                         {project.title}
                       </h3>
                       <p className="text-muted-foreground leading-relaxed mb-4 text-sm md:text-base">{project.description}</p>

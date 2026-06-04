@@ -24,8 +24,8 @@ const About = () => {
           transition={{ duration: 0.4 }}
           className="mb-16"
         >
-          <span className="text-primary text-sm font-medium tracking-wider uppercase">About Me</span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">Crafting Digital Experiences</h2>
+          <span className="eyebrow">About Me</span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 mb-6">Building software that lasts</h2>
         </motion.div>
 
         {/* Stats */}
@@ -36,12 +36,12 @@ const About = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16"
         >
           {[
-            { value: 3, suffix: "+", label: "Projects Completed" },
+            { value: 3, suffix: "+", label: "Projects Shipped" },
             { value: 1, suffix: "+", label: "Year Experience" },
             { value: 8, suffix: "+", label: "Technologies" },
-            { value: 100, suffix: "%", label: "Client Satisfaction" },
+            { value: 5, suffix: "+", label: "Domains Built For" },
           ].map((stat) => (
-            <div key={stat.label} className="text-center p-4 glass-card rounded-xl">
+            <div key={stat.label} className="text-center p-4 glass-card">
               <div className="font-display text-3xl md:text-4xl font-bold text-primary mb-1">
                 <AnimatedCounter end={stat.value} duration={isMobile ? 800 : 1500} suffix={stat.suffix} />
               </div>
@@ -84,7 +84,7 @@ const About = () => {
                 transition={{ duration: 0.4, delay: 0.2 + index * 0.08 }}
                 className="glass-card p-6 flex items-start gap-4 hover:border-primary/30 transition-colors"
               >
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
+                <div className="w-12 h-12 rounded-md bg-secondary flex items-center justify-center text-primary shrink-0">
                   <item.icon size={24} />
                 </div>
                 <div>

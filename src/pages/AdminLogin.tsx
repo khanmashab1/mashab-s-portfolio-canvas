@@ -57,7 +57,7 @@ const AdminLogin = () => {
 
         <div className="glass-card p-8">
           <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mx-auto mb-4">
+            <div className="w-14 h-14 rounded-lg bg-secondary flex items-center justify-center text-primary mx-auto mb-4">
               <Lock size={26} />
             </div>
             <h1 className="font-display text-2xl font-bold text-foreground">
@@ -80,7 +80,7 @@ const AdminLogin = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   maxLength={255}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full pl-10 pr-4 py-3 rounded-md bg-secondary/50 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="you@example.com"
                 />
               </div>
@@ -97,7 +97,7 @@ const AdminLogin = () => {
                   required
                   minLength={6}
                   maxLength={72}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full pl-10 pr-4 py-3 rounded-md bg-secondary/50 border border-border text-foreground focus:outline-none focus:ring-2 focus:ring-primary/40"
                   placeholder="••••••••"
                 />
               </div>
@@ -105,7 +105,7 @@ const AdminLogin = () => {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50"
+              className="w-full py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50"
             >
               {submitting ? "Please wait…" : "Sign In"}
             </button>

@@ -3,9 +3,10 @@ import Lenis from "lenis";
 
 const useLenis = () => {
   useEffect(() => {
-    // Skip smooth scroll on mobile for native performance
+    // Skip smooth scroll on mobile (native performance) and for reduced-motion users
     const isMobile = window.innerWidth < 768;
-    if (isMobile) return;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (isMobile || prefersReducedMotion) return;
 
     const lenis = new Lenis({
       duration: 0.8,

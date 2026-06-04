@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Home, ArrowLeft } from "lucide-react";
@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 
 const NotFound = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
@@ -15,34 +16,31 @@ const NotFound = () => {
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="text-center max-w-md">
         <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="font-display text-8xl md:text-9xl font-bold glow-text mb-4">
-            404
-          </h1>
+          <p className="font-display text-7xl md:text-8xl font-semibold text-primary mb-4">404</p>
         </motion.div>
-        
+
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <h2 className="font-display text-2xl md:text-3xl font-bold text-foreground mb-4">
-            Page Not Found
-          </h2>
+          <h1 className="font-display text-2xl md:text-3xl font-semibold text-foreground mb-4">
+            Page not found
+          </h1>
           <p className="text-muted-foreground mb-8 leading-relaxed">
-            Oops! The page you're looking for doesn't exist or has been moved. 
-            Let's get you back on track.
+            That page doesn't exist or has moved. Let's get you back on track.
           </p>
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-3 justify-center"
         >
           <Button asChild size="lg" className="gap-2">
             <a href="/">
@@ -50,11 +48,9 @@ const NotFound = () => {
               Back to Home
             </a>
           </Button>
-          <Button asChild variant="outline" size="lg" className="gap-2">
-            <a href="javascript:history.back()">
-              <ArrowLeft size={18} />
-              Go Back
-            </a>
+          <Button variant="outline" size="lg" className="gap-2" onClick={() => navigate(-1)}>
+            <ArrowLeft size={18} />
+            Go Back
           </Button>
         </motion.div>
       </div>

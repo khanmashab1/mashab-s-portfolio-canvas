@@ -91,8 +91,8 @@ const ExperienceAdmin = () => {
       )}
 
       {form && (
-        <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-background border border-border rounded-2xl max-w-xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="fixed inset-0 bg-background/80 z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-background border border-border rounded-lg max-w-xl w-full max-h-[90vh] overflow-y-auto">
             <div className="sticky top-0 bg-background border-b border-border p-4 flex items-center justify-between">
               <h3 className="font-display font-bold text-foreground">{"id" in form ? "Edit" : "New"} Entry</h3>
               <button onClick={() => setForm(null)} className="p-2 hover:bg-secondary rounded-lg"><X size={18} /></button>

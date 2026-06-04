@@ -59,8 +59,8 @@ const Contact = () => {
           transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium tracking-wider uppercase">Get in Touch</span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">Let's Work Together</h2>
+          <span className="eyebrow">Get in Touch</span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 mb-4">Let's Work Together</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">Have a project in mind or want to discuss opportunities? I'd love to hear from you.</p>
         </motion.div>
 
@@ -73,27 +73,27 @@ const Contact = () => {
             <form onSubmit={handleSubmit} className="glass-card p-6 md:p-8 space-y-5">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">Name</label>
-                <input id="name" type="text" maxLength={100} value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors" placeholder="Your name" />
+                <input id="name" type="text" maxLength={100} value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} className="w-full px-4 py-3 rounded-md bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-colors" placeholder="Your name" />
                 {errors.name && <p className="text-destructive text-xs mt-1">{errors.name}</p>}
               </div>
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">Email</label>
-                <input id="email" type="email" maxLength={255} value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors" placeholder="your@email.com" />
+                <input id="email" type="email" maxLength={255} value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} className="w-full px-4 py-3 rounded-md bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-colors" placeholder="your@email.com" />
                 {errors.email && <p className="text-destructive text-xs mt-1">{errors.email}</p>}
               </div>
               <div>
                 <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">Message</label>
-                <textarea id="message" rows={5} maxLength={1000} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full px-4 py-3 rounded-xl bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/50 transition-colors resize-none" placeholder="Your message..." />
+                <textarea id="message" rows={5} maxLength={1000} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} className="w-full px-4 py-3 rounded-md bg-secondary/50 border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/40 transition-colors resize-none" placeholder="Your message..." />
                 {errors.message && <p className="text-destructive text-xs mt-1">{errors.message}</p>}
               </div>
-              <button type="submit" disabled={submitting} className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-xl hover:bg-primary/90 transition-colors active:scale-[0.98] disabled:opacity-60">
+              <button type="submit" disabled={submitting} className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-primary text-primary-foreground font-medium rounded-md hover:bg-primary/90 transition-colors active:scale-[0.98] disabled:opacity-60">
                 <Send size={18} /> {submitting ? "Sending…" : "Send Message"}
               </button>
               {errors.form && (
                 <p className="text-center text-sm text-destructive font-medium">{errors.form}</p>
               )}
               {submitted && (
-                <p className="text-center text-sm text-primary font-medium animate-fade-in">✅ Message sent successfully!</p>
+                <p className="text-center text-sm text-primary font-medium animate-fade-in">Message sent successfully — I'll be in touch soon.</p>
               )}
             </form>
           </motion.div>
@@ -106,7 +106,7 @@ const Contact = () => {
           >
             {contactInfo.map((item) => (
               <div key={item.label} className="glass-card p-5 flex items-center gap-4 hover:border-primary/30 transition-colors">
-                <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                <div className="w-12 h-12 rounded-md bg-secondary flex items-center justify-center text-primary">
                   <item.icon size={22} />
                 </div>
                 <div>
@@ -123,7 +123,7 @@ const Contact = () => {
             ))}
 
             <a href="/resume.pdf" download className="glass-card p-5 flex items-center gap-4 group hover:border-primary/30 transition-colors block">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+              <div className="w-12 h-12 rounded-md bg-secondary flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
                 <Download size={22} />
               </div>
               <div>

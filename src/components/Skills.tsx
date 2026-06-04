@@ -1,8 +1,9 @@
 import { motion, useInView } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Monitor, Server, Database, Wrench, Sparkles, type LucideIcon } from "lucide-react";
+import { Monitor, Server, Database, Wrench, type LucideIcon } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { supabase } from "@/integrations/supabase/client";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Skill = { id: string; category: string; name: string; level: number };
 
@@ -46,17 +47,31 @@ const Skills = () => {
           transition={{ duration: 0.4 }}
           className="text-center mb-16"
         >
-          <span className="text-primary text-sm font-medium tracking-wider uppercase">Expertise</span>
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mt-2 mb-6">Skills & Technologies</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">A comprehensive toolkit for building modern, scalable applications</p>
+          <span className="eyebrow">Expertise</span>
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold mt-3 mb-4">Skills &amp; Technologies</h2>
+          <p className="text-muted-foreground max-w-2xl mx-auto">A focused toolkit for building modern, scalable applications.</p>
         </motion.div>
 
         {loading ? (
-          <p className="text-center text-muted-foreground">Loading…</p>
+          <div className="grid md:grid-cols-2 gap-6 md:gap-8" aria-hidden="true">
+            {[0, 1].map((i) => (
+              <div key={i} className="glass-card p-6 md:p-8">
+                <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
+                  <Skeleton className="w-9 h-9 rounded-md" />
+                  <Skeleton className="h-5 w-28" />
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[16, 20, 14, 24, 18, 12].map((w, j) => (
+                    <Skeleton key={j} className="h-8" style={{ width: `${w * 4}px` }} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             {Object.entries(grouped).map(([category, items], categoryIndex) => {
-              const Icon = iconMap[category] ?? Sparkles;
+              const Icon = iconMap[category] ?? Wrench;
               return (
                 <motion.div
                   key={category}
@@ -65,28 +80,20 @@ const Skills = () => {
                   transition={{ duration: 0.4, delay: isMobile ? 0.1 : categoryIndex * 0.1 }}
                   className="glass-card p-6 md:p-8"
                 >
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                      <Icon size={20} />
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-border">
+                    <div className="w-9 h-9 rounded-md bg-secondary flex items-center justify-center text-primary">
+                      <Icon size={18} />
                     </div>
-                    <h3 className="font-display text-xl font-bold text-primary">{category}</h3>
+                    <h3 className="font-display text-lg font-semibold text-foreground">{category}</h3>
                   </div>
-                  <div className="space-y-4">
+                  <div className="flex flex-wrap gap-2">
                     {items.map((skill) => (
-                      <div key={skill.id}>
-                        <div className="flex justify-between text-sm mb-1.5">
-                          <span className="text-foreground font-medium">{skill.name}</span>
-                          <span className="text-muted-foreground">{skill.level}%</span>
-                        </div>
-                        <div className="h-2 bg-muted rounded-full overflow-hidden">
-                          <motion.div
-                            className="h-full rounded-full bg-gradient-to-r from-primary to-primary/60"
-                            initial={{ width: 0 }}
-                            animate={isInView ? { width: `${skill.level}%` } : {}}
-                            transition={{ duration: isMobile ? 0.4 : 0.8, delay: isMobile ? 0 : 0.2, ease: "easeOut" }}
-                          />
-                        </div>
-                      </div>
+                      <span
+                        key={skill.id}
+                        className="px-3 py-1.5 text-sm text-foreground bg-secondary/60 border border-border rounded-md hover:border-primary/50 transition-colors"
+                      >
+                        {skill.name}
+                      </span>
                     ))}
                   </div>
                 </motion.div>

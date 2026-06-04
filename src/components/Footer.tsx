@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Heart } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 
 const quickLinks = [
   { name: "Home", href: "#" },
@@ -23,7 +23,7 @@ const Footer = () => {
       <div className="section-container">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <span className="font-display text-xl font-bold glow-text">MJ 🚀</span>
+            <span className="font-display text-xl font-semibold text-foreground">Mashab Jadoon</span>
             <p className="text-sm text-muted-foreground mt-2">
               Full Stack Developer building scalable web applications and smart digital solutions.
             </p>
@@ -44,7 +44,7 @@ const Footer = () => {
             <h4 className="font-display font-semibold text-foreground mb-3">Connect</h4>
             <div className="flex items-center gap-3">
               {socialLinks.map(({ icon: Icon, href, label }) => (
-                <a key={label} href={href} target={label !== "Email" ? "_blank" : undefined} rel={label !== "Email" ? "noopener noreferrer" : undefined} aria-label={label} className="p-2.5 rounded-lg bg-secondary/50 text-muted-foreground hover:text-primary hover:bg-secondary transition-all duration-300">
+                <a key={label} href={href} target={label !== "Email" ? "_blank" : undefined} rel={label !== "Email" ? "noopener noreferrer" : undefined} aria-label={label} className="p-2.5 rounded-md border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-colors">
                   <Icon size={18} />
                 </a>
               ))}
@@ -53,8 +53,8 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-border pt-6 text-center">
-          <p className="text-sm text-muted-foreground flex items-center justify-center gap-1">
-            © {currentYear} Mashab Jadoon. Built with ☕ & <Heart size={14} className="text-primary fill-primary" />
+          <p className="text-sm text-muted-foreground">
+            © {currentYear} Mashab Jadoon. All rights reserved.
           </p>
         </div>
       </div>
