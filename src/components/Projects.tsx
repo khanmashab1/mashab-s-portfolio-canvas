@@ -25,11 +25,11 @@ const ImageCarousel = ({ images, title }: { images: string[]; title: string }) =
     return <div className="w-full h-full bg-secondary" />;
   }
   if (resolved.length === 1) {
-    return <img src={resolved[0]} alt={title} className="w-full h-full object-cover" loading="lazy" />;
+    return <img src={resolved[0]} alt={title} className="w-full h-full object-cover" loading="lazy" decoding="async" width={1400} height={800} />;
   }
   return (
     <div className="relative w-full h-full">
-      <img src={resolved[current]} alt={`${title} - ${current + 1}`} className="w-full h-full object-cover transition-opacity duration-300" loading="lazy" />
+      <img src={resolved[current]} alt={`${title} - ${current + 1}`} className="w-full h-full object-cover transition-opacity duration-300" loading="lazy" decoding="async" width={1400} height={800} />
       <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
         {resolved.map((_, i) => (
           <button key={i} type="button" aria-label={`Show image ${i + 1} of ${resolved.length}`} aria-current={i === current} onClick={(e) => { e.stopPropagation(); setCurrent(i); }} className={`h-2 rounded-full transition-all ${i === current ? "bg-primary w-5" : "bg-foreground/40 w-2"}`} />
