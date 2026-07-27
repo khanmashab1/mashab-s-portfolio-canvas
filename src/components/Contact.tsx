@@ -93,7 +93,7 @@ const Contact = () => {
                 <p className="text-center text-sm text-destructive font-medium">{errors.form}</p>
               )}
               {submitted && (
-                <p className="text-center text-sm text-primary font-medium animate-fade-in">Message sent successfully — I'll be in touch soon.</p>
+                <p className="text-center text-sm text-primary font-medium animate-fade-in">Message sent successfully - I'll be in touch soon.</p>
               )}
             </form>
           </motion.div>

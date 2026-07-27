@@ -3,7 +3,7 @@ const PaperBackground = () => {
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       <div className="absolute inset-0 bg-background" />
 
-      {/* Very subtle warm paper vignette — no animation, no neon */}
+      {/* Very subtle warm paper vignette - no animation, no neon */}
       <div
         className="absolute inset-0 opacity-[0.5]"
         style={{
