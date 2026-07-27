@@ -88,7 +88,7 @@ const Hero = () => {
           className="max-w-xl mx-auto text-base sm:text-lg text-muted-foreground mb-10 leading-relaxed text-balance"
         >
           I build scalable web applications and dependable digital business
-          solutions — from healthcare platforms to management systems.
+          solutions - from healthcare platforms to management systems.
         </motion.p>
 
         {/* CTA Buttons */}

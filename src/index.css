@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Editorial light theme — warm ivory paper, ink text, deep slate-navy accent */
+    /* Editorial light theme - warm ivory paper, ink text, deep slate-navy accent */
     --background: 40 33% 97%;
     --foreground: 30 8% 12%;
 
@@ -42,7 +42,7 @@
   }
 
   .dark {
-    /* Refined dark — warm ink, soft off-white, muted slate-blue accent */
+    /* Refined dark - warm ink, soft off-white, muted slate-blue accent */
     --background: 40 8% 9%;
     --foreground: 40 20% 90%;
     --card: 40 7% 12%;
@@ -89,7 +89,7 @@
     letter-spacing: -0.01em;
   }
 
-  /* Tinted text selection — keeps the single-accent palette */
+  /* Tinted text selection - keeps the single-accent palette */
   ::selection {
     background: hsl(var(--primary) / 0.18);
     color: hsl(var(--foreground));
@@ -143,7 +143,7 @@
 }
 
 @layer components {
-  /* Solid editorial surface — hairline border, soft restrained shadow (no blur/glow) */
+  /* Solid editorial surface - hairline border, soft restrained shadow (no blur/glow) */
   .glass-card {
     @apply bg-card border border-border rounded-lg;
     box-shadow:
