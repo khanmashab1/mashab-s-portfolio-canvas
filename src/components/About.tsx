@@ -1,8 +1,9 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Code2, Layers, Target } from "lucide-react";
 import AnimatedCounter from "./AnimatedCounter";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { supabase } from "@/integrations/supabase/client";
 
 const highlights = [
   { icon: Code2, title: "Clean Code", description: "Writing maintainable, readable, and well-structured code" },
@@ -14,6 +15,26 @@ const About = () => {
   const ref = useRef(null);
   const isMobile = useIsMobile();
   const isInView = useInView(ref, { once: true, margin: "0px" });
+  const [stats, setStats] = useState({ projects: 0, skills: 0, experience: 0, domains: 0 });
+
+  useEffect(() => {
+    (async () => {
+      const [p, s, e] = await Promise.all([
+        supabase.from("projects").select("id", { count: "exact", head: true }),
+        supabase.from("skills").select("name", { count: "exact", head: true }),
+        supabase.from("experience").select("id", { count: "exact", head: true }),
+      ]);
+      const { data: projRows } = await supabase.from("projects").select("tech");
+      const domains = new Set<string>();
+      (projRows ?? []).forEach((r: { tech: string[] | null }) => (r.tech ?? []).forEach((t) => domains.add(t)));
+      setStats({
+        projects: p.count ?? 0,
+        skills: s.count ?? 0,
+        experience: e.count ?? 0,
+        domains: domains.size,
+      });
+    })();
+  }, []);
 
   return (
     <section id="about" className="py-24 md:py-32 relative" ref={ref}>
@@ -36,10 +57,10 @@ const About = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16"
         >
           {[
-            { value: 3, suffix: "+", label: "Projects Shipped" },
-            { value: 1, suffix: "+", label: "Year Experience" },
-            { value: 8, suffix: "+", label: "Technologies" },
-            { value: 5, suffix: "+", label: "Domains Built For" },
+            { value: stats.projects, suffix: "+", label: "Projects Shipped" },
+            { value: Math.max(stats.experience, 1), suffix: "+", label: "Year Experience" },
+            { value: stats.skills, suffix: "+", label: "Technologies" },
+            { value: stats.domains, suffix: "+", label: "Tech Stack Used" },
           ].map((stat) => (
             <div key={stat.label} className="text-center p-4 glass-card">
               <div className="font-display text-3xl md:text-4xl font-bold text-primary mb-1">
