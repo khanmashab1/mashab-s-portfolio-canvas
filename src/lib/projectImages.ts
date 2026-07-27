@@ -8,6 +8,9 @@ import projectEnergy3 from "@/assets/project-energy3.png";
 import projectZicmart1 from "@/assets/project-zicmart1.png";
 import projectZicmart2 from "@/assets/project-zicmart2.png";
 import projectZicmart3 from "@/assets/project-zicmart3.png";
+import projectNikahverse from "@/assets/project-nikahverse.png";
+import projectResumecraft from "@/assets/project-resumecraft.png";
+import projectNovanode from "@/assets/project-novanode.png";
 
 // Maps DB image keys to bundled assets so existing projects keep working.
 // New projects can use full URLs instead.
@@ -22,6 +25,9 @@ export const projectImageMap: Record<string, string> = {
   "project-zicmart1": projectZicmart1,
   "project-zicmart2": projectZicmart2,
   "project-zicmart3": projectZicmart3,
+  "project-nikahverse": projectNikahverse,
+  "project-resumecraft": projectResumecraft,
+  "project-novanode": projectNovanode,
 };
 
 export const resolveImage = (key: string): string => {
